@@ -3,7 +3,7 @@ import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import AuthContext from '../../store/AuthProvider';
 
-const AuthenticatedRoute = ({ exact, path, component }) => {
+const AuthRoute = ({ exact, path, component }) => {
   const { authState } = useContext(AuthContext);
   const { isAuthenticated } = authState;
 
@@ -14,14 +14,14 @@ const AuthenticatedRoute = ({ exact, path, component }) => {
   return <Route exact={exact} path={path} component={component} />;
 };
 
-AuthenticatedRoute.propTypes = {
+AuthRoute.propTypes = {
   exact: PropTypes.bool,
   path: PropTypes.string.isRequired,
   component: PropTypes.func.isRequired,
 };
 
-AuthenticatedRoute.defaultProps = {
+AuthRoute.defaultProps = {
   exact: false,
 };
 
-export default AuthenticatedRoute;
+export default AuthRoute;
