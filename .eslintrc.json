@@ -22,7 +22,7 @@
         "space-before-function-paren": ["error", "never"],
         "react/require-default-props": "error",
         "no-unused-vars": "warn",
-        "prettier/prettier": "error"
+        "prettier/prettier": "warn"
     },
     "ignorePatterns": ["**/*.css"]
 }
