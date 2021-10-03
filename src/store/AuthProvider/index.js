@@ -1,16 +1,15 @@
 import React, { createContext, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import reducer from './reducer';
+import initialState from './initialState';
 
 const AuthContext = createContext({});
 const { Provider } = AuthContext;
 
-const initialState = {};
-
 function AuthProvider({ children }) {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [authState, authDispatch] = useReducer(reducer, initialState);
 
-  return <Provider value={{ state, dispatch }}>{children}</Provider>;
+  return <Provider value={{ authState, authDispatch }}>{children}</Provider>;
 }
 
 AuthProvider.propTypes = {

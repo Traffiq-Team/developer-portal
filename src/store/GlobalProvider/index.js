@@ -1,11 +1,10 @@
 import React, { createContext, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import reducer from './reducer';
+import initialState from './initialState';
 
 const GlobalContext = createContext({});
 const { Provider } = GlobalContext;
-
-const initialState = {};
 
 function GlobalProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);

@@ -21,6 +21,7 @@
         "comma-dangle": ["error", "always-multiline"],
         "space-before-function-paren": ["error", "never"],
         "react/require-default-props": "error",
+        "import/order": "warn",
         "no-unused-vars": "warn",
         "prettier/prettier": "warn"
     },
