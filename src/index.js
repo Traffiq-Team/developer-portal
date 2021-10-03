@@ -3,12 +3,15 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { GlobalProvider } from './store';
+import { GlobalProvider } from './store/GlobalProvider';
+import { AuthProvider } from './store/AuthProvider';
 
 ReactDOM.render(
   <React.StrictMode>
     <GlobalProvider>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </GlobalProvider>
   </React.StrictMode>,
   document.getElementById('root'),

@@ -2,20 +2,20 @@ import React, { createContext, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import reducer from './reducer';
 
-const store = createContext({});
-const { Provider } = store;
+const AuthContext = createContext({});
+const { Provider } = AuthContext;
 
-const initialState = { val: 'hi' };
+const initialState = {};
 
-function GlobalProvider({ children }) {
+function AuthProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   return <Provider value={{ state, dispatch }}>{children}</Provider>;
 }
 
-GlobalProvider.propTypes = {
+AuthProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export { GlobalProvider };
-export default store;
+export { AuthProvider };
+export default AuthContext;
