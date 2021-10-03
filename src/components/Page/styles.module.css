@@ -1,0 +1,23 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  padding: 16px;
+  box-sizing: border-box;
+  height: 100%;
+  max-width: 1366px;
+  margin: 0 auto;
+  flex: 1;
+  width: 100%;
+}
+
+.footer {
+  background-color: black;
+  color: white;
+  padding: 16px;
+  text-align: center;
+  font-size: 14px;
+}
