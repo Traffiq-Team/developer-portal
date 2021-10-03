@@ -1,6 +1,5 @@
 const initialState = {
-  token: null,
-  isAuthenticated: false,
+  appName: null,
 };
 
 export default initialState;

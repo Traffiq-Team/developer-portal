@@ -3,16 +3,16 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { GlobalProvider } from './store/GlobalProvider';
+import { AppProvider } from './store/AppProvider';
 import { AuthProvider } from './store/AuthProvider';
 
 ReactDOM.render(
   <React.StrictMode>
-    <GlobalProvider>
+    <AppProvider>
       <AuthProvider>
         <App />
       </AuthProvider>
-    </GlobalProvider>
+    </AppProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 );
