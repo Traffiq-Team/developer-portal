@@ -6,7 +6,7 @@ const Home = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     console.log('submitting', username, password);
   };
@@ -16,11 +16,23 @@ const Home = () => {
       <form onSubmit={handleSubmit}>
         <label>
           Username
-          <input className={styles.input} type="text" placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} />
+          <input
+            className={styles.input}
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
         </label>
         <label>
           Password
-          <input className={styles.input} type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
+          <input
+            className={styles.input}
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </label>
         <button type="submit">Submit</button>
       </form>
