@@ -1,7 +1,11 @@
 const initialState = {
   token: null,
   isAuthenticated: true,
-  appName: null,
+  appName: 'testApp5',
+  appConfiguration: {
+    url: '',
+    targetLatency: '',
+  },
 };
 
 export default initialState;
