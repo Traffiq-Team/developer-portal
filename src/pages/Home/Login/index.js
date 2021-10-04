@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import AppContext from '../../../store/AppProvider';
 import AuthContext from '../../../store/AuthProvider';
@@ -14,14 +14,7 @@ const Login = () => {
 
   const { appDispatch } = useContext(AppContext);
 
-  const { authState, authDispatch } = useContext(AuthContext);
-  const { isAuthenticated } = authState;
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      history.push('/dashboard');
-    }
-  }, [isAuthenticated]);
+  const { authDispatch } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,6 +25,8 @@ const Login = () => {
 
       authDispatch({ type: SET_AUTH_TOKEN, payload: token });
       appDispatch({ type: SET_APP_NAME, payload: meta?.appName });
+
+      history.push('/dashboard');
     } catch (error) {
       console.log('Error from authenticateUser');
     }
