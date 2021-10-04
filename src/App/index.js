@@ -9,7 +9,7 @@ function App() {
     <Router>
       <Switch>
         <Route exact path="/" component={Home} />
-        <AuthRoute exact path="/dashboard" component={Dashboard} />
+        <AuthRoute path="/dashboard/:appName" component={Dashboard} />
       </Switch>
     </Router>
   );

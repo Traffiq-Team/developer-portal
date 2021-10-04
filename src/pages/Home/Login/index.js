@@ -3,10 +3,7 @@ import { useHistory } from 'react-router-dom';
 import AppContext from '../../../store/AppProvider';
 import AuthContext from '../../../store/AuthProvider';
 import authenticateUser from '../../../api/authenticateUser';
-import {
-  SET_AUTH_TOKEN,
-  SET_APP_NAME,
-} from '../../../store/AuthProvider/actions';
+import { SET_AUTH_TOKEN } from '../../../store/AuthProvider/actions';
 import styles from './styles.module.css';
 
 const Login = () => {
@@ -23,10 +20,9 @@ const Login = () => {
 
     try {
       const { data } = await authenticateUser(username, password);
-      const { token, meta } = data;
+      const { token } = data;
 
       authDispatch({ type: SET_AUTH_TOKEN, payload: token });
-      appDispatch({ type: SET_APP_NAME, payload: meta?.appName });
 
       history.push('/dashboard');
     } catch (error) {

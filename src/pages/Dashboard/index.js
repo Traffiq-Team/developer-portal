@@ -1,17 +1,15 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import editAppConfiguration from '../../api/editAppConfiguration';
 import getAppConfiguration from '../../api/getAppConfiguration';
 import Page from '../../components/Page';
-import AuthContext from '../../store/AuthProvider';
-import { SET_APP_CONFIGURATION } from '../../store/AuthProvider/actions';
 import styles from './styles.module.css';
 
 const Dashboard = () => {
   const [url, setUrl] = useState('');
   const [targetLatency, setTargetLatency] = useState('');
 
-  const { authState, authDispatch } = useContext(AuthContext);
-  const { appName, appConfiguration } = authState;
+  const { appName } = useParams();
 
   useEffect(() => {
     const fetchAppMetadata = async () => {
@@ -19,10 +17,8 @@ const Dashboard = () => {
         const { data } = await getAppConfiguration(appName);
         const { url, targetLatency } = data;
 
-        authDispatch({
-          type: SET_APP_CONFIGURATION,
-          payload: { url, targetLatency },
-        });
+        setUrl(url);
+        setTargetLatency(targetLatency);
       } catch (error) {
         console.error('caught this error when fetching app metadata', error);
       }
@@ -30,18 +26,6 @@ const Dashboard = () => {
 
     fetchAppMetadata();
   }, []);
-
-  useEffect(() => {
-    const { url, targetLatency } = appConfiguration;
-
-    if (url) {
-      setUrl(url);
-    }
-
-    if (targetLatency) {
-      setTargetLatency(targetLatency);
-    }
-  }, [appConfiguration]);
 
   const handleSave = async (e) => {
     e.preventDefault();
