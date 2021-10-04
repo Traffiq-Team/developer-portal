@@ -1,5 +1,5 @@
 const initialState = {
-  appName: null,
+  isLoading: false,
 };
 
 export default initialState;

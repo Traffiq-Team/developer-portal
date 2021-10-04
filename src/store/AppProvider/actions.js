@@ -1,1 +1,1 @@
-export const SET_APP_NAME = 'SET_APP_NAME';
+export const SET_IS_LOADING = 'SET_IS_LOADING';
