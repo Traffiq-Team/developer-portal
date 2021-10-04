@@ -1,70 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import editAppConfiguration from '../../api/editAppConfiguration';
-import getAppConfiguration from '../../api/getAppConfiguration';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Page from '../../components/Page';
+import getAllAppConfigurations from '../../api/getAllAppConfigurations';
 import styles from './styles.module.css';
 
 const Dashboard = () => {
-  const [url, setUrl] = useState('');
-  const [targetLatency, setTargetLatency] = useState('');
-
-  const { appName } = useParams();
+  const [appConfigurations, setAppConfigurations] = useState([]);
 
   useEffect(() => {
-    const fetchAppMetadata = async () => {
+    const _getAllAppConfigurations = async () => {
       try {
-        const { data } = await getAppConfiguration(appName);
-        const { url, targetLatency } = data;
-
-        setUrl(url);
-        setTargetLatency(targetLatency);
+        const appConfigurations = await getAllAppConfigurations();
+        setAppConfigurations(appConfigurations);
       } catch (error) {
-        console.error('caught this error when fetching app metadata', error);
+        console.error('error from _getAllAppConfigurations', error);
       }
     };
 
-    fetchAppMetadata();
+    _getAllAppConfigurations();
   }, []);
-
-  const handleSave = async (e) => {
-    e.preventDefault();
-
-    try {
-      const { data } = await editAppConfiguration(appName, {
-        url,
-        targetLatency,
-      });
-      console.log('got this data from editAppConfiguration', data);
-    } catch (error) {
-      console.error('caught this error when fetching app metadata', error);
-    }
-  };
 
   return (
     <Page>
       <h1>Dashboard</h1>
-      <form className={styles.form} onSubmit={handleSave}>
-        <label>
-          URL
-          <input
-            className={styles.input}
-            type="text"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-          />
-        </label>
-        <label>
-          Target latency (in milliseconds)
-          <input
-            className={styles.input}
-            type="number"
-            value={targetLatency}
-            onChange={(e) => setTargetLatency(e.target.value)}
-          />
-        </label>
-        <button type="submit">Save</button>
-      </form>
+      <ul>
+        {appConfigurations.map(({ appName }) => (
+          <li key={appName}>
+            <Link to={`/app/${appName}`}>{appName}</Link>
+          </li>
+        ))}
+      </ul>
     </Page>
   );
 };
