@@ -1,33 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import saveAppConfiguration from '../../api/saveAppConfiguration';
-import getAppConfiguration from '../../api/getAppConfiguration';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Page from '../../components/Page';
+import saveAppConfiguration from '../../api/saveAppConfiguration';
 import styles from './styles.module.css';
 
-const Configuration = () => {
+const CreateApp = () => {
+  const [appName, setAppName] = useState('');
   const [url, setUrl] = useState('');
   const [targetLatency, setTargetLatency] = useState('');
+  const history = useHistory();
 
-  const { appName } = useParams();
-
-  useEffect(() => {
-    const fetchAppMetadata = async () => {
-      try {
-        const { data } = await getAppConfiguration(appName);
-        const { url, targetLatency } = data;
-
-        setUrl(url);
-        setTargetLatency(targetLatency);
-      } catch (error) {
-        console.error('caught this error when fetching app metadata', error);
-      }
-    };
-
-    fetchAppMetadata();
-  }, []);
-
-  const handleSave = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
@@ -35,6 +18,8 @@ const Configuration = () => {
         url,
         targetLatency,
       });
+
+      history.push('/dashboard');
     } catch (error) {
       console.error('caught this error when fetching app metadata', error);
     }
@@ -42,8 +27,17 @@ const Configuration = () => {
 
   return (
     <Page>
-      <h1>{appName} Configurations</h1>
-      <form className={styles.form} onSubmit={handleSave}>
+      <h1>Create new app</h1>
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <label>
+          Application name
+          <input
+            className={styles.input}
+            type="text"
+            value={appName}
+            onChange={(e) => setAppName(e.target.value)}
+          />
+        </label>
         <label>
           URL
           <input
@@ -62,10 +56,10 @@ const Configuration = () => {
             onChange={(e) => setTargetLatency(e.target.value)}
           />
         </label>
-        <button type="submit">Save</button>
+        <button type="submit">Submit</button>
       </form>
     </Page>
   );
 };
 
-export default Configuration;
+export default CreateApp;

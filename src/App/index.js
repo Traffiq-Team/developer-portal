@@ -1,9 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import AuthRoute from '../components/AuthRoute';
 import Home from '../pages/Home';
 import Dashboard from '../pages/Dashboard';
 import Configuration from '../pages/Configuration';
-import AuthRoute from '../components/AuthRoute';
+import CreateApp from '../pages/CreateApp';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route exact path="/" component={Home} />
         <AuthRoute exact path="/dashboard" component={Dashboard} />
         <AuthRoute exact path="/app/:appName" component={Configuration} />
+        <AuthRoute exact path="/create" component={CreateApp} />
       </Switch>
     </Router>
   );
