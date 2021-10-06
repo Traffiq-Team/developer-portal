@@ -4,6 +4,7 @@ import saveAppConfiguration from '../../api/saveAppConfiguration';
 import getAppConfiguration from '../../api/getAppConfiguration';
 import Page from '../../components/Page';
 import Button from '../../components/Button';
+import Input from '../../components/Input';
 import styles from './styles.module.css';
 
 const Configuration = () => {
@@ -45,24 +46,20 @@ const Configuration = () => {
     <Page>
       <h1>{appName} Configurations</h1>
       <form className={styles.form} onSubmit={handleSave}>
-        <label>
-          URL
-          <input
-            className={styles.input}
-            type="text"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-          />
-        </label>
-        <label>
-          Target latency (in milliseconds)
-          <input
-            className={styles.input}
-            type="number"
-            value={targetLatency}
-            onChange={(e) => setTargetLatency(e.target.value)}
-          />
-        </label>
+        <Input
+          type="text"
+          placeholder="URL"
+          label="URL"
+          value={url}
+          onChange={(value) => setUrl(value)}
+        />
+        <Input
+          type="number"
+          placeholder="Target latency (in milliseconds)"
+          label="Target latency (in milliseconds)"
+          value={targetLatency}
+          onChange={(value) => setTargetLatency(value)}
+        />
         <Button type="submit">Save</Button>
       </form>
     </Page>

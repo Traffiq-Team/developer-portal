@@ -2,7 +2,7 @@
   font-family: 'Apercu';
   border: none;
   text-decoration: none;
-  display: inline-block;
+  display: block;
   padding: 12px 16px;
   box-sizing: border-box;
   transition: ease 250ms;

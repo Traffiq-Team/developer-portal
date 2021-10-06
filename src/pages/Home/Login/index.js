@@ -4,6 +4,7 @@ import AuthContext from '../../../store/AuthProvider';
 import authenticateUser from '../../../api/authenticateUser';
 import { SET_AUTH_TOKEN } from '../../../store/AuthProvider/actions';
 import Button from '../../../components/Button';
+import Input from '../../../components/Input';
 import styles from './styles.module.css';
 
 const Login = () => {
@@ -30,26 +31,20 @@ const Login = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label>
-        Username
-        <input
-          className={styles.input}
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-      </label>
-      <label>
-        Password
-        <input
-          className={styles.input}
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </label>
+      <Input
+        type="text"
+        placeholder="Username"
+        label="Username"
+        value={username}
+        onChange={(value) => setUsername(value)}
+      />
+      <Input
+        type="password"
+        placeholder="Password"
+        label="Password"
+        value={password}
+        onChange={(value) => setPassword(value)}
+      />
       <Button type="submit">Submit</Button>
     </form>
   );

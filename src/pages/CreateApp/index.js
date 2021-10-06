@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import Page from '../../components/Page';
 import saveAppConfiguration from '../../api/saveAppConfiguration';
 import Button from '../../components/Button';
+import Input from '../../components/Input';
 import styles from './styles.module.css';
 
 const CreateApp = () => {
@@ -30,33 +31,27 @@ const CreateApp = () => {
     <Page>
       <h1>Create new app</h1>
       <form className={styles.form} onSubmit={handleSubmit}>
-        <label>
-          Application name
-          <input
-            className={styles.input}
-            type="text"
-            value={appName}
-            onChange={(e) => setAppName(e.target.value)}
-          />
-        </label>
-        <label>
-          URL
-          <input
-            className={styles.input}
-            type="text"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-          />
-        </label>
-        <label>
-          Target latency (in milliseconds)
-          <input
-            className={styles.input}
-            type="number"
-            value={targetLatency}
-            onChange={(e) => setTargetLatency(e.target.value)}
-          />
-        </label>
+        <Input
+          type="text"
+          placeholder="Application name"
+          label="Application name"
+          value={appName}
+          onChange={(value) => setAppName(value)}
+        />
+        <Input
+          type="text"
+          placeholder="URL"
+          label="URL"
+          value={url}
+          onChange={(value) => setUrl(value)}
+        />
+        <Input
+          type="number"
+          placeholder="Target latency (in milliseconds)"
+          label="Target latency (in milliseconds)"
+          value={targetLatency}
+          onChange={(value) => setTargetLatency(value)}
+        />
         <Button type="submit">Submit</Button>
       </form>
     </Page>
