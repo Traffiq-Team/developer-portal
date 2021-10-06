@@ -1,17 +1,15 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import AppContext from '../../../store/AppProvider';
 import AuthContext from '../../../store/AuthProvider';
 import authenticateUser from '../../../api/authenticateUser';
 import { SET_AUTH_TOKEN } from '../../../store/AuthProvider/actions';
+import Button from '../../../components/Button';
 import styles from './styles.module.css';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const history = useHistory();
-
-  const { appDispatch } = useContext(AppContext);
 
   const { authDispatch } = useContext(AuthContext);
 
@@ -52,7 +50,7 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
       </label>
-      <button type="submit">Submit</button>
+      <Button type="submit">Submit</Button>
     </form>
   );
 };

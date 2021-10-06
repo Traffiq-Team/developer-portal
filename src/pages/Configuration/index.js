@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import saveAppConfiguration from '../../api/saveAppConfiguration';
 import getAppConfiguration from '../../api/getAppConfiguration';
 import Page from '../../components/Page';
+import Button from '../../components/Button';
 import styles from './styles.module.css';
 
 const Configuration = () => {
@@ -62,7 +63,7 @@ const Configuration = () => {
             onChange={(e) => setTargetLatency(e.target.value)}
           />
         </label>
-        <button type="submit">Save</button>
+        <Button type="submit">Save</Button>
       </form>
     </Page>
   );

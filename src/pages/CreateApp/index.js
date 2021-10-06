@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Page from '../../components/Page';
 import saveAppConfiguration from '../../api/saveAppConfiguration';
+import Button from '../../components/Button';
 import styles from './styles.module.css';
 
 const CreateApp = () => {
@@ -56,7 +57,7 @@ const CreateApp = () => {
             onChange={(e) => setTargetLatency(e.target.value)}
           />
         </label>
-        <button type="submit">Submit</button>
+        <Button type="submit">Submit</Button>
       </form>
     </Page>
   );
