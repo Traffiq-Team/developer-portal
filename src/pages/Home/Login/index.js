@@ -30,23 +30,30 @@ const Login = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Input
-        type="text"
-        placeholder="Username"
-        label="Username"
-        value={username}
-        onChange={(value) => setUsername(value)}
-      />
-      <Input
-        type="password"
-        placeholder="Password"
-        label="Password"
-        value={password}
-        onChange={(value) => setPassword(value)}
-      />
-      <Button type="submit">Submit</Button>
-    </form>
+    <section className={styles.container}>
+      <h1 className={styles.title}>Sign in</h1>
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <Input
+          type="text"
+          placeholder="Username"
+          label="Username"
+          value={username}
+          onChange={(value) => setUsername(value)}
+          fullWidth
+        />
+        <Input
+          type="password"
+          placeholder="Password"
+          label="Password"
+          value={password}
+          onChange={(value) => setPassword(value)}
+          fullWidth
+        />
+        <Button type="submit" fullWidth>
+          Submit
+        </Button>
+      </form>
+    </section>
   );
 };
 

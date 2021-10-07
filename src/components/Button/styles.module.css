@@ -14,7 +14,24 @@
   cursor: pointer;
 }
 
+.button:disabled {
+  cursor: not-allowed;
+}
+
 .primary {
   background-color: black;
   color: white;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.spinner {
+  width: 8px;
+  height: 8px;
+}
+
+.spinner path {
+  stroke: white;
 }

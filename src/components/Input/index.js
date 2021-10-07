@@ -1,19 +1,20 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import styles from './styles.module.css';
 
-const Input = ({ type, placeholder, onChange, value, label }) => {
+const Input = ({ type, placeholder, onChange, value, label, fullWidth }) => {
   return (
-    <Fragment>
+    <span>
       {label && <label className={styles.label}>{label}</label>}
       <input
-        className={styles.input}
+        className={classNames(styles.input, fullWidth && styles.fullWidth)}
         type={type}
         placeholder={placeholder}
         onChange={(e) => onChange(e.target.value)}
         value={value}
       />
-    </Fragment>
+    </span>
   );
 };
 
@@ -23,6 +24,7 @@ Input.propTypes = {
   onChange: PropTypes.func,
   value: PropTypes.string,
   label: PropTypes.string,
+  fullWidth: PropTypes.bool,
 };
 
 Input.defaultProps = {
@@ -31,6 +33,7 @@ Input.defaultProps = {
   onChange: () => {},
   value: '',
   label: '',
+  fullWidth: false,
 };
 
 export default Input;

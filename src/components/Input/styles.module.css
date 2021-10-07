@@ -2,12 +2,23 @@
   font-family: 'Apercu';
   border: none;
   outline: none;
-  background-color: #eaeaea;
+  background-color: #f0f0f0;
   padding: 12px 16px;
   box-sizing: border-box;
   font-size: 14px;
+  transition: ease 250ms;
+}
+
+.input:focus {
+  box-shadow: 0 0 0 2px black;
+  background-color: white;
 }
 
 .label {
   display: block;
+  margin-bottom: 8px;
+}
+
+.fullWidth {
+  width: 100%;
 }
