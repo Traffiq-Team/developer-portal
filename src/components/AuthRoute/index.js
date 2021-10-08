@@ -1,15 +1,27 @@
-import React, { useContext } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react';
+import { Route, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import AuthContext from '../../store/AuthProvider';
+import checkAuthentication from '../../api/checkAuthentication';
+import { SET_AUTHENTICATED } from '../../store/AuthProvider/actions';
 
 const AuthRoute = ({ exact, path, component }) => {
-  const { authState } = useContext(AuthContext);
-  const { isAuthenticated } = authState;
+  const { authDispatch } = useContext(AuthContext);
+  const history = useHistory();
 
-  if (!isAuthenticated) {
-    return <Redirect to="/" />;
-  }
+  useEffect(() => {
+    const _checkAuthentication = async () => {
+      try {
+        await checkAuthentication();
+        authDispatch({ type: SET_AUTHENTICATED, payload: true });
+      } catch (error) {
+        authDispatch({ type: SET_AUTHENTICATED, payload: false });
+        history.push('/home/login');
+      }
+    };
+
+    _checkAuthentication();
+  }, [authDispatch]);
 
   return <Route exact={exact} path={path} component={component} />;
 };

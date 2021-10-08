@@ -10,7 +10,7 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/" component={Home} />
+        <Route exact path="/home/:formType" component={Home} />
         <AuthRoute exact path="/dashboard" component={Dashboard} />
         <AuthRoute exact path="/app/:appName" component={Configuration} />
         <AuthRoute exact path="/create" component={CreateApp} />
