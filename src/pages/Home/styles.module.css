@@ -7,8 +7,10 @@
 }
 
 .left {
-  background-color: grey;
   flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .right {
@@ -16,4 +18,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.graphic {
+  background-color: rgb(69, 149, 235);
+  height: 100%;
 }

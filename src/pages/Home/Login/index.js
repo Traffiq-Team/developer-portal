@@ -50,7 +50,7 @@ const Login = () => {
           fullWidth
         />
         <Button type="submit" fullWidth>
-          Submit
+          Sign in
         </Button>
       </form>
     </section>

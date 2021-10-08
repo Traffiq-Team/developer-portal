@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import styles from './styles.module.css';
 
-const Page = ({ children, edgePadding }) => {
+const Page = ({ children, edgePadding, showNavigation }) => {
   return (
     <section className={styles.page}>
-      <nav className={styles.nav} />
+      {showNavigation && <nav className={styles.nav} />}
       <main
         className={classNames(
           styles.main,
@@ -23,10 +23,12 @@ const Page = ({ children, edgePadding }) => {
 Page.propTypes = {
   children: PropTypes.node.isRequired,
   edgePadding: PropTypes.bool,
+  showNavigation: PropTypes.bool,
 };
 
 Page.defaultProps = {
   edgePadding: true,
+  showNavigation: true,
 };
 
 export default Page;
