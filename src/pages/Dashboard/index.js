@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Page from '../../components/Page';
 import getAllAppConfigurations from '../../api/getAllAppConfigurations';
+import Button from '../../components/Button';
+import Input from '../../components/Input';
 import styles from './styles.module.css';
 
 const Dashboard = () => {
@@ -23,8 +25,11 @@ const Dashboard = () => {
 
   return (
     <Page>
-      <h1>Dashboard</h1>
-      <button onClick={() => history.push('/create')}>Create new app</button>
+      <header className={styles.header}>
+        <h1>Dashboard</h1>
+        <Button onClick={() => history.push('/create')}>Create new app</Button>
+      </header>
+      <Input placeholder="Search for app" fullWidth />
       <ul>
         {appConfigurations.map(({ appName }) => (
           <li key={appName}>
