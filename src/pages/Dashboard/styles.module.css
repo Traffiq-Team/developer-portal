@@ -4,3 +4,42 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.search {
+  margin: 8px 0 16px 0;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tableHeader {
+  text-align: left;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.tableHead {
+  padding: 16px;
+  border-bottom: 1px solid lightgray;
+}
+
+.tableData {
+  padding: 16px;
+  border-bottom: 1px solid lightgray;
+  font-size: 16px;
+}
+
+.actionsHead {
+  text-align: right;
+}
+
+.actionsData {
+  text-align: right;
+}
+
+.edit {
+  width: 14px;
+  height: 14px;
+}

@@ -3,12 +3,24 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import styles from './styles.module.css';
 
-const Input = ({ type, placeholder, onChange, value, label, fullWidth }) => {
+const Input = ({
+  type,
+  placeholder,
+  onChange,
+  value,
+  label,
+  fullWidth,
+  className,
+}) => {
   return (
     <span>
       {label && <label className={styles.label}>{label}</label>}
       <input
-        className={classNames(styles.input, fullWidth && styles.fullWidth)}
+        className={classNames(
+          styles.input,
+          className,
+          fullWidth && styles.fullWidth,
+        )}
         type={type}
         placeholder={placeholder}
         onChange={(e) => onChange(e.target.value)}
@@ -25,6 +37,7 @@ Input.propTypes = {
   value: PropTypes.string,
   label: PropTypes.string,
   fullWidth: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 Input.defaultProps = {
@@ -34,6 +47,7 @@ Input.defaultProps = {
   value: '',
   label: '',
   fullWidth: false,
+  className: null,
 };
 
 export default Input;

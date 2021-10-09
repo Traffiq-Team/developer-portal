@@ -1,10 +1,11 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import AuthContext from '../../../store/AuthProvider';
 import authenticateUser from '../../../api/authenticateUser';
 import { SET_AUTHENTICATED } from '../../../store/AuthProvider/actions';
 import Button from '../../../components/Button';
 import Input from '../../../components/Input';
+import checkAuthentication from '../../../api/checkAuthentication';
 import styles from './styles.module.css';
 
 const Login = () => {
@@ -13,6 +14,20 @@ const Login = () => {
   const history = useHistory();
 
   const { authDispatch } = useContext(AuthContext);
+
+  useEffect(() => {
+    const _checkAuthentication = async () => {
+      try {
+        await checkAuthentication();
+        authDispatch({ type: SET_AUTHENTICATED, payload: true });
+        history.push('/dashboard');
+      } catch (error) {
+        authDispatch({ type: SET_AUTHENTICATED, payload: false });
+      }
+    };
+
+    _checkAuthentication();
+  }, [authDispatch]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
