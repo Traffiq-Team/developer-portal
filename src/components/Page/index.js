@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import LogoutIcon from '../icons/LogoutIcon';
+import { Button, LogOutIcon } from 'evergreen-ui';
 import styles from './styles.module.css';
 
 const Page = ({ children, edgePadding, showNavigation }) => {
@@ -17,7 +17,15 @@ const Page = ({ children, edgePadding, showNavigation }) => {
     <section className={styles.page}>
       {showNavigation && (
         <nav className={styles.nav}>
-          <LogoutIcon className={styles.logout} onClick={handleLogoutClick} />
+          {/* <LogoutIcon className={styles.logout} onClick={handleLogoutClick} /> */}
+          <Button
+            iconBefore={LogOutIcon}
+            onClick={handleLogoutClick}
+            appearance="minimal"
+            size="large"
+          >
+            Log out
+          </Button>
         </nav>
       )}
       <main

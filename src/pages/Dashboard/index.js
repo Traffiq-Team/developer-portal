@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import classNames from 'classnames';
-import { Dialog } from 'evergreen-ui';
+import {
+  Dialog,
+  Button,
+  IconButton,
+  TrashIcon,
+  EditIcon,
+  PlusIcon,
+  Tooltip,
+  Position,
+} from 'evergreen-ui';
 import Page from '../../components/Page';
 import getAllAppConfigurations from '../../api/getAllAppConfigurations';
-import Button from '../../components/Button';
+// import Button from '../../components/Button';
 import Input from '../../components/Input';
-import EditIcon from '../../components/icons/EditIcon';
-import TrashIcon from '../../components/icons/TrashIcon';
 import deleteAppConfiguration from '../../api/deleteAppConfiguration';
 import styles from './styles.module.css';
 
@@ -54,7 +61,14 @@ const Dashboard = () => {
     <Page>
       <header className={styles.header}>
         <h1>Dashboard</h1>
-        <Button onClick={() => history.push('/create')}>Create new app</Button>
+        <Button
+          appearance="primary"
+          size="large"
+          iconBefore={PlusIcon}
+          onClick={() => history.push('/create')}
+        >
+          Create new app
+        </Button>
       </header>
       <section className={styles.section}>
         <Input
@@ -86,14 +100,21 @@ const Dashboard = () => {
                   className={classNames(styles.tableData, styles.actionsData)}
                 >
                   <span className={styles.actions}>
-                    <EditIcon
-                      className={classNames(styles.icon, styles.editIcon)}
-                      onClick={() => handleEditClick(appName)}
-                    />
-                    <TrashIcon
-                      className={classNames(styles.icon, styles.trashIcon)}
-                      onClick={() => setFocusedAppName(appName)}
-                    />
+                    <Tooltip content="Edit app" position={Position.TOP}>
+                      <IconButton
+                        icon={EditIcon}
+                        onClick={() => handleEditClick(appName)}
+                        appearance="minimal"
+                      />
+                    </Tooltip>
+                    <Tooltip content="Delete app" position={Position.TOP}>
+                      <IconButton
+                        icon={TrashIcon}
+                        onClick={() => setFocusedAppName(appName)}
+                        appearance="minimal"
+                        intent="danger"
+                      />
+                    </Tooltip>
                   </span>
                 </td>
               </tr>
