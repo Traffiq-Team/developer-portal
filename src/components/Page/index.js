@@ -17,7 +17,6 @@ const Page = ({ children, edgePadding, showNavigation }) => {
     <section className={styles.page}>
       {showNavigation && (
         <nav className={styles.nav}>
-          {/* <LogoutIcon className={styles.logout} onClick={handleLogoutClick} /> */}
           <Button
             iconBefore={LogOutIcon}
             onClick={handleLogoutClick}

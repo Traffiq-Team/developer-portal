@@ -29,7 +29,7 @@ const Dashboard = () => {
       const appConfigurations = await getAllAppConfigurations();
       setAppConfigurations(appConfigurations);
     } catch (error) {
-      console.error('error from _getAllAppConfigurations', error);
+      console.error('error from populateAppConfigurations', error);
     }
   };
 
