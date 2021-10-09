@@ -47,7 +47,7 @@ const Page = ({ children, edgePadding, showNavigation, showBack }) => {
       >
         {children}
       </main>
-      <footer className={styles.footer}>powered by TraffiQ</footer>
+      <footer className={styles.footer}>powered by Traffiq</footer>
     </section>
   );
 };
