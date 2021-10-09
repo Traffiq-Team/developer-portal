@@ -26,6 +26,10 @@ const Dashboard = () => {
     _getAllAppConfigurations();
   }, []);
 
+  const handleEditClick = (appName) => {
+    history.push(`/app/${appName}`);
+  };
+
   const handleDeleteClick = (appName) => {
     history.push(`/app/${appName}`);
   };
@@ -66,11 +70,10 @@ const Dashboard = () => {
                   className={classNames(styles.tableData, styles.actionsData)}
                 >
                   <span className={styles.actions}>
-                    <Link to={`/app/${appName}`}>
-                      <EditIcon
-                        className={classNames(styles.icon, styles.editIcon)}
-                      />
-                    </Link>
+                    <EditIcon
+                      className={classNames(styles.icon, styles.editIcon)}
+                      onClick={() => handleEditClick(appName)}
+                    />
                     <TrashIcon
                       className={classNames(styles.icon, styles.trashIcon)}
                       onClick={() => handleDeleteClick(appName)}

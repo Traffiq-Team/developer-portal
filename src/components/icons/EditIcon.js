@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const EditIcon = ({ className }) => {
+const EditIcon = ({ className, onClick }) => {
   return (
     <svg
       aria-hidden="true"
@@ -23,10 +23,12 @@ const EditIcon = ({ className }) => {
 
 EditIcon.propTypes = {
   className: PropTypes.string,
+  onClick: PropTypes.func,
 };
 
 EditIcon.defaultProps = {
   className: null,
+  onClick: () => {},
 };
 
 export default EditIcon;
