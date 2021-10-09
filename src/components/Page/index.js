@@ -1,12 +1,25 @@
 import React from 'react';
+import { useHistory } from 'react-router';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import LogoutIcon from '../icons/LogoutIcon';
 import styles from './styles.module.css';
 
 const Page = ({ children, edgePadding, showNavigation }) => {
+  const history = useHistory();
+
+  const handleLogoutClick = () => {
+    // TODO: Call logout endpoint
+    history.push('/home/login');
+  };
+
   return (
     <section className={styles.page}>
-      {showNavigation && <nav className={styles.nav} />}
+      {showNavigation && (
+        <nav className={styles.nav}>
+          <LogoutIcon className={styles.logout} onClick={handleLogoutClick} />
+        </nav>
+      )}
       <main
         className={classNames(
           styles.main,
