@@ -5,7 +5,8 @@ import Page from '../../components/Page';
 import getAllAppConfigurations from '../../api/getAllAppConfigurations';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
-import editIcon from '../../assets/icons/edit-solid.svg';
+import EditIcon from '../../components/icons/EditIcon';
+import TrashIcon from '../../components/icons/TrashIcon';
 import styles from './styles.module.css';
 
 const Dashboard = () => {
@@ -25,7 +26,7 @@ const Dashboard = () => {
     _getAllAppConfigurations();
   }, []);
 
-  const handleEditClick = (appName) => {
+  const handleDeleteClick = (appName) => {
     history.push(`/app/${appName}`);
   };
 
@@ -64,9 +65,17 @@ const Dashboard = () => {
                 <td
                   className={classNames(styles.tableData, styles.actionsData)}
                 >
-                  <Link to={`/app/${appName}`}>
-                    <img className={styles.edit} src={editIcon} />
-                  </Link>
+                  <span className={styles.actions}>
+                    <Link to={`/app/${appName}`}>
+                      <EditIcon
+                        className={classNames(styles.icon, styles.editIcon)}
+                      />
+                    </Link>
+                    <TrashIcon
+                      className={classNames(styles.icon, styles.trashIcon)}
+                      onClick={() => handleDeleteClick(appName)}
+                    />
+                  </span>
                 </td>
               </tr>
             ))}

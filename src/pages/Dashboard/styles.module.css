@@ -12,21 +12,22 @@
 .table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed;
 }
 
 .tableHeader {
   text-align: left;
   font-weight: bold;
-  font-size: 14px;
 }
 
 .tableHead {
-  padding: 16px;
+  padding: 24px;
   border-bottom: 1px solid lightgray;
+  font-size: 14px;
 }
 
 .tableData {
-  padding: 16px;
+  padding: 24px;
   border-bottom: 1px solid lightgray;
   font-size: 16px;
 }
@@ -39,7 +40,30 @@
   text-align: right;
 }
 
-.edit {
-  width: 14px;
-  height: 14px;
+.icon {
+  width: 16px;
+  height: 16px;
+  color: black;
+}
+
+.icon path {
+  transition: ease 200ms;
+}
+
+.icon:hover {
+  cursor: pointer;
+}
+
+.editIcon:hover path {
+  fill: rgb(44, 85, 218);
+}
+
+.trashIcon:hover path {
+  fill: rgb(255, 78, 78);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
 }
