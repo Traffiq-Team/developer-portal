@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
-import classNames from 'classnames';
 import {
   Dialog,
   Button,
@@ -10,19 +9,25 @@ import {
   PlusIcon,
   Tooltip,
   Position,
+  Table,
 } from 'evergreen-ui';
+import Fuse from 'fuse.js';
 import Page from '../../components/Page';
 import getAllAppConfigurations from '../../api/getAllAppConfigurations';
-// import Button from '../../components/Button';
-import Input from '../../components/Input';
 import deleteAppConfiguration from '../../api/deleteAppConfiguration';
 import styles from './styles.module.css';
+
+const fuseOptions = {
+  keys: ['appName'],
+};
 
 const Dashboard = () => {
   const [appConfigurations, setAppConfigurations] = useState([]);
   const [focusedAppName, setFocusedAppName] = useState('');
+  const [searchValue, setSearchValue] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
   const history = useHistory();
+  const fuse = new Fuse(appConfigurations, fuseOptions);
 
   const populateAppConfigurations = async () => {
     try {
@@ -57,48 +62,48 @@ const Dashboard = () => {
     }
   };
 
+  const filteredAppConfigurations = useMemo(
+    () =>
+      searchValue
+        ? fuse.search(searchValue).map(({ item }) => item)
+        : appConfigurations,
+    [searchValue, appConfigurations],
+  );
+
   return (
     <Page>
-      <header className={styles.header}>
-        <h1>Dashboard</h1>
-        <Button
-          appearance="primary"
-          size="large"
-          iconBefore={PlusIcon}
-          onClick={() => history.push('/create')}
-        >
-          Create new app
-        </Button>
-      </header>
-      <section className={styles.section}>
-        <Input
-          className={styles.search}
-          placeholder="Search for app name"
-          fullWidth
-        />
-        <table className={styles.table}>
-          <thead className={styles.tableHeader}>
-            <tr className={styles.tableRow}>
-              <th className={styles.tableHead}>App Name</th>
-              <th className={styles.tableHead}>URL</th>
-              <th className={styles.tableHead}>
-                Target Latency (in milliseconds)
-              </th>
-              <th className={classNames(styles.tableHead, styles.actionsHead)}>
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody className={styles.tableBody}>
-            {appConfigurations.map(({ appName, config }) => (
-              <tr key={appName} className={styles.tableRow}>
-                {/* <Link to={`/app/${appName}`}>{appName}</Link> */}
-                <td className={styles.tableData}>{appName}</td>
-                <td className={styles.tableData}>{config.url}</td>
-                <td className={styles.tableData}>{config.targetLatency}</td>
-                <td
-                  className={classNames(styles.tableData, styles.actionsData)}
-                >
+      <section className={styles.container}>
+        <header className={styles.header}>
+          <h1 className={styles.title}>Dashboard</h1>
+          <Button
+            size="large"
+            iconBefore={PlusIcon}
+            onClick={() => history.push('/create')}
+          >
+            Create new app
+          </Button>
+        </header>
+        <Table>
+          <Table.Head>
+            <Table.SearchHeaderCell
+              placeholder="Search for App name"
+              onChange={(value) => setSearchValue(value)}
+            />
+            <Table.TextHeaderCell>URL</Table.TextHeaderCell>
+            <Table.TextHeaderCell>
+              Target Latency (in milliseconds)
+            </Table.TextHeaderCell>
+            <Table.HeaderCell justifyContent="flex-end">
+              Actions
+            </Table.HeaderCell>
+          </Table.Head>
+          <Table.Body maxHeight={384}>
+            {filteredAppConfigurations.map(({ appName, config }) => (
+              <Table.Row key={appName}>
+                <Table.TextCell>{appName}</Table.TextCell>
+                <Table.TextCell>{config.url}</Table.TextCell>
+                <Table.TextCell isNumber>{config.targetLatency}</Table.TextCell>
+                <Table.Cell justifyContent="flex-end">
                   <span className={styles.actions}>
                     <Tooltip content="Edit app" position={Position.TOP}>
                       <IconButton
@@ -116,11 +121,11 @@ const Dashboard = () => {
                       />
                     </Tooltip>
                   </span>
-                </td>
-              </tr>
+                </Table.Cell>
+              </Table.Row>
             ))}
-          </tbody>
-        </table>
+          </Table.Body>
+        </Table>
       </section>
       <Dialog
         isShown={!!focusedAppName}
