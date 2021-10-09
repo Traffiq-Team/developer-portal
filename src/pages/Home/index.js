@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import makeDocumentTitle from '../../common/utils/makeDocumentTitle';
 import Page from '../../components/Page';
 import Info from './Info';
 import Login from './Login';
@@ -8,6 +9,10 @@ import styles from './styles.module.css';
 
 const Home = () => {
   const { formType } = useParams();
+
+  useEffect(() => {
+    makeDocumentTitle('Home');
+  }, []);
 
   const renderForm = () => {
     return formType === 'login' ? <Login /> : <Signup />;

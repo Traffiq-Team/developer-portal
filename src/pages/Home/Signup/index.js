@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import AuthContext from '../../../store/AuthProvider';
-import { SET_AUTH_TOKEN } from '../../../store/AuthProvider/actions';
+import { SET_AUTHENTICATED } from '../../../store/AuthProvider/actions';
 import Button from '../../../components/Button';
 import Input from '../../../components/Input';
 import createAccount from '../../../api/createAccount';
@@ -18,13 +18,9 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const { data } = await createAccount(username, password);
-      console.log('data', data);
-      // const { token } = data;
-
-      // authDispatch({ type: SET_AUTH_TOKEN, payload: token });
-
-      // history.push('/dashboard');
+      await createAccount(username, password);
+      authDispatch({ type: SET_AUTHENTICATED, payload: true });
+      history.push('/dashboard');
     } catch (error) {
       console.log('Error from authenticateUser');
     }

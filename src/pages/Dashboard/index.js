@@ -15,6 +15,7 @@ import Fuse from 'fuse.js';
 import Page from '../../components/Page';
 import getAllAppConfigurations from '../../api/getAllAppConfigurations';
 import deleteAppConfiguration from '../../api/deleteAppConfiguration';
+import makeDocumentTitle from '../../common/utils/makeDocumentTitle';
 import styles from './styles.module.css';
 
 const fuseOptions = {
@@ -37,6 +38,10 @@ const Dashboard = () => {
       console.error('error from populateAppConfigurations', error);
     }
   };
+
+  useEffect(() => {
+    makeDocumentTitle('Dashboard');
+  }, []);
 
   useEffect(() => {
     populateAppConfigurations();
@@ -71,7 +76,7 @@ const Dashboard = () => {
   );
 
   return (
-    <Page>
+    <Page showBack={false}>
       <section className={styles.container}>
         <header className={styles.header}>
           <h1 className={styles.title}>Dashboard</h1>

@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Page from '../../components/Page';
 import saveAppConfiguration from '../../api/saveAppConfiguration';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
+import makeDocumentTitle from '../../common/utils/makeDocumentTitle';
 import styles from './styles.module.css';
 
 const CreateApp = () => {
@@ -11,6 +12,10 @@ const CreateApp = () => {
   const [url, setUrl] = useState('');
   const [targetLatency, setTargetLatency] = useState('');
   const history = useHistory();
+
+  useEffect(() => {
+    makeDocumentTitle('Create New App');
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

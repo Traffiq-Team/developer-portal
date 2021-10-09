@@ -2,10 +2,10 @@ import React from 'react';
 import { useHistory } from 'react-router';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { Button, LogOutIcon } from 'evergreen-ui';
+import { ArrowLeftIcon, Button, LogOutIcon } from 'evergreen-ui';
 import styles from './styles.module.css';
 
-const Page = ({ children, edgePadding, showNavigation }) => {
+const Page = ({ children, edgePadding, showNavigation, showBack }) => {
   const history = useHistory();
 
   const handleLogoutClick = () => {
@@ -17,6 +17,18 @@ const Page = ({ children, edgePadding, showNavigation }) => {
     <section className={styles.page}>
       {showNavigation && (
         <nav className={styles.nav}>
+          {showBack ? (
+            <Button
+              iconBefore={ArrowLeftIcon}
+              onClick={() => history.goBack()}
+              appearance="minimal"
+              size="large"
+            >
+              Back
+            </Button>
+          ) : (
+            <span />
+          )}
           <Button
             iconBefore={LogOutIcon}
             onClick={handleLogoutClick}
@@ -44,11 +56,13 @@ Page.propTypes = {
   children: PropTypes.node.isRequired,
   edgePadding: PropTypes.bool,
   showNavigation: PropTypes.bool,
+  showBack: PropTypes.bool,
 };
 
 Page.defaultProps = {
   edgePadding: true,
   showNavigation: true,
+  showBack: true,
 };
 
 export default Page;
