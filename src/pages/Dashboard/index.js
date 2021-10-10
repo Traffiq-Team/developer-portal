@@ -2,12 +2,13 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
   Dialog,
-  Button,
   IconButton,
   TrashIcon,
   EditIcon,
   PlusIcon,
+  CleanIcon,
   Table,
+  EmptyState,
 } from 'evergreen-ui';
 import Fuse from 'fuse.js';
 import Page from '../../components/Page';
@@ -102,28 +103,41 @@ const Dashboard = () => {
             </Table.HeaderCell>
           </Table.Head>
           <Table.Body maxHeight={384}>
-            {filteredAppConfigurations.map(({ appName, config }) => (
-              <Table.Row key={appName}>
-                <Table.TextCell>{appName}</Table.TextCell>
-                <Table.TextCell>{config.url}</Table.TextCell>
-                <Table.TextCell isNumber>{config.targetLatency}</Table.TextCell>
-                <Table.Cell justifyContent="flex-end">
-                  <span className={styles.actions}>
-                    <IconButton
-                      icon={EditIcon}
-                      onClick={() => handleEditClick(appName)}
-                      appearance="minimal"
-                    />
-                    <IconButton
-                      icon={TrashIcon}
-                      onClick={() => setFocusedAppName(appName)}
-                      appearance="minimal"
-                      intent="danger"
-                    />
-                  </span>
-                </Table.Cell>
-              </Table.Row>
-            ))}
+            {filteredAppConfigurations.length > 0 ? (
+              filteredAppConfigurations.map(({ appName, config }) => (
+                <Table.Row key={appName}>
+                  <Table.TextCell>{appName}</Table.TextCell>
+                  <Table.TextCell>{config.url}</Table.TextCell>
+                  <Table.TextCell isNumber>
+                    {config.targetLatency}
+                  </Table.TextCell>
+                  <Table.Cell justifyContent="flex-end">
+                    <span className={styles.actions}>
+                      <IconButton
+                        icon={EditIcon}
+                        onClick={() => handleEditClick(appName)}
+                        appearance="minimal"
+                      />
+                      <IconButton
+                        icon={TrashIcon}
+                        onClick={() => setFocusedAppName(appName)}
+                        appearance="minimal"
+                        intent="danger"
+                      />
+                    </span>
+                  </Table.Cell>
+                </Table.Row>
+              ))
+            ) : (
+              <EmptyState
+                background="light"
+                title="No apps found"
+                orientation="horizontal"
+                icon={<CleanIcon color="#C1C4D6" />}
+                iconBgColor="#EDEFF5"
+                description="Start by creating a new app to see some information about it appear here."
+              />
+            )}
           </Table.Body>
         </Table>
       </section>

@@ -6,9 +6,9 @@ import {
   SET_AUTHENTICATED,
   SET_USERNAME,
 } from '../../../store/AuthProvider/actions';
-import Button from '../../../components/Button';
 import Input from '../../../components/Input';
 import checkAuthentication from '../../../api/checkAuthentication';
+import PrimaryButton from '../../../components/PrimaryButton';
 import styles from './styles.module.css';
 
 const Login = () => {
@@ -52,7 +52,7 @@ const Login = () => {
   return (
     <section className={styles.container}>
       <h1 className={styles.title}>Log in</h1>
-      <form className={styles.form} onSubmit={handleSubmit}>
+      <form className={styles.form}>
         <Input
           type="text"
           placeholder="Username"
@@ -69,12 +69,12 @@ const Login = () => {
           onChange={(value) => setPassword(value)}
           fullWidth
         />
-        <Button type="submit" fullWidth>
+        <PrimaryButton size="large" onClick={handleSubmit}>
           Log in
-        </Button>
+        </PrimaryButton>
       </form>
       <Link to="/home/signup" className={styles.link}>
-        New here? Sign up today!
+        New here? Create a new account!
       </Link>
     </section>
   );

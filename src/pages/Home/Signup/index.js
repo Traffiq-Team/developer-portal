@@ -2,9 +2,9 @@ import React, { useState, useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import AuthContext from '../../../store/AuthProvider';
 import { SET_AUTHENTICATED } from '../../../store/AuthProvider/actions';
-import Button from '../../../components/Button';
 import Input from '../../../components/Input';
 import createAccount from '../../../api/createAccount';
+import PrimaryButton from '../../../components/PrimaryButton';
 import styles from './styles.module.css';
 
 const Login = () => {
@@ -29,7 +29,7 @@ const Login = () => {
   return (
     <section className={styles.container}>
       <h1 className={styles.title}>Create an account</h1>
-      <form className={styles.form} onSubmit={handleSubmit}>
+      <form className={styles.form}>
         <Input
           type="text"
           placeholder="Username"
@@ -46,9 +46,9 @@ const Login = () => {
           onChange={(value) => setPassword(value)}
           fullWidth
         />
-        <Button type="submit" fullWidth>
+        <PrimaryButton size="large" onClick={handleSubmit}>
           Create account
-        </Button>
+        </PrimaryButton>
       </form>
       <Link to="/home/login" className={styles.link}>
         Already have an account? Log in here.
