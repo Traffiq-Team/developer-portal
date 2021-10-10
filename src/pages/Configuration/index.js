@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import saveAppConfiguration from '../../api/saveAppConfiguration';
 import getAppConfiguration from '../../api/getAppConfiguration';
 import Page from '../../components/Page';
-import Button from '../../components/Button';
 import Input from '../../components/Input';
 import makeDocumentTitle from '../../common/utils/makeDocumentTitle';
 import PrimaryButton from '../../components/PrimaryButton';
