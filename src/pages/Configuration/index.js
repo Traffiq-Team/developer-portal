@@ -5,6 +5,7 @@ import getAppConfiguration from '../../api/getAppConfiguration';
 import Page from '../../components/Page';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
+import makeDocumentTitle from '../../common/utils/makeDocumentTitle';
 import styles from './styles.module.css';
 
 const Configuration = () => {
@@ -12,6 +13,10 @@ const Configuration = () => {
   const [targetLatency, setTargetLatency] = useState('');
 
   const { appName } = useParams();
+
+  useEffect(() => {
+    makeDocumentTitle(`${appName} Configurations`);
+  }, []);
 
   useEffect(() => {
     const fetchAppMetadata = async () => {

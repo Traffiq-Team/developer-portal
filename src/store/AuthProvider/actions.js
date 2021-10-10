@@ -1,1 +1,2 @@
-export const SET_AUTH_TOKEN = 'SET_AUTH_TOKEN';
+export const SET_AUTHENTICATED = 'SET_AUTHENTICATED';
+export const SET_USERNAME = 'SET_USERNAME';

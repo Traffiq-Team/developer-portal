@@ -1,9 +1,11 @@
-import { SET_AUTH_TOKEN } from './actions';
+import { SET_AUTHENTICATED, SET_USERNAME } from './actions';
 
 const reducer = (state, { type, payload }) => {
   switch (type) {
-    case SET_AUTH_TOKEN:
-      return { ...state, token: payload, isAuthenticated: !!payload };
+    case SET_AUTHENTICATED:
+      return { ...state, authenticated: payload };
+    case SET_USERNAME:
+      return { ...state, username: payload };
     default:
   }
 };

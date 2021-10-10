@@ -1,16 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import { ThemeProvider } from 'evergreen-ui';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { AppProvider } from './store/AppProvider';
 import { AuthProvider } from './store/AuthProvider';
+import theme from './theme';
 
 ReactDOM.render(
   <React.StrictMode>
     <AppProvider>
       <AuthProvider>
-        <App />
+        <ThemeProvider value={theme}>
+          <App />
+        </ThemeProvider>
       </AuthProvider>
     </AppProvider>
   </React.StrictMode>,

@@ -5,8 +5,9 @@
   background-color: #f0f0f0;
   padding: 12px 16px;
   box-sizing: border-box;
-  font-size: 14px;
+  font-size: 16px;
   transition: ease 250ms;
+  border-radius: 4px;
 }
 
 .input:focus {
@@ -17,6 +18,7 @@
 .label {
   display: block;
   margin-bottom: 8px;
+  font-size: 16px;
 }
 
 .fullWidth {

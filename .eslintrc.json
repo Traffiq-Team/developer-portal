@@ -27,6 +27,7 @@
         "react/require-default-props": "error",
         "import/order": "warn",
         "no-unused-vars": "warn",
+        "multiline-ternary": "off",
         "prettier/prettier": "warn"
     },
     "ignorePatterns": ["**/*.css"]

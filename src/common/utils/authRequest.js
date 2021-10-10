@@ -10,7 +10,7 @@ function authRequest(method, endpoint, data = {}) {
 
   const url = `${config.baseUrl}${endpoint}`;
 
-  return axios({ method, url, data, headers });
+  return axios({ method, url, data, headers, withCredentials: true });
 }
 
 export default authRequest;

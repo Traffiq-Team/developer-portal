@@ -1,14 +1,10 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import AuthContext from '../../../store/AuthProvider';
-import authenticateUser from '../../../api/authenticateUser';
-import {
-  SET_AUTHENTICATED,
-  SET_USERNAME,
-} from '../../../store/AuthProvider/actions';
+import { SET_AUTHENTICATED } from '../../../store/AuthProvider/actions';
 import Button from '../../../components/Button';
 import Input from '../../../components/Input';
-import checkAuthentication from '../../../api/checkAuthentication';
+import createAccount from '../../../api/createAccount';
 import styles from './styles.module.css';
 
 const Login = () => {
@@ -18,31 +14,12 @@ const Login = () => {
 
   const { authDispatch } = useContext(AuthContext);
 
-  useEffect(() => {
-    const _checkAuthentication = async () => {
-      try {
-        const { username } = await checkAuthentication();
-
-        authDispatch({ type: SET_AUTHENTICATED, payload: true });
-        authDispatch({ type: SET_USERNAME, payload: username });
-
-        history.push('/dashboard');
-      } catch (error) {
-        authDispatch({ type: SET_AUTHENTICATED, payload: false });
-      }
-    };
-
-    _checkAuthentication();
-  }, [authDispatch]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      await authenticateUser(username, password);
-
+      await createAccount(username, password);
       authDispatch({ type: SET_AUTHENTICATED, payload: true });
-
       history.push('/dashboard');
     } catch (error) {
       console.log('Error from authenticateUser');
@@ -51,7 +28,7 @@ const Login = () => {
 
   return (
     <section className={styles.container}>
-      <h1 className={styles.title}>Log in</h1>
+      <h1 className={styles.title}>Create an account</h1>
       <form className={styles.form} onSubmit={handleSubmit}>
         <Input
           type="text"
@@ -70,11 +47,11 @@ const Login = () => {
           fullWidth
         />
         <Button type="submit" fullWidth>
-          Log in
+          Create account
         </Button>
       </form>
-      <Link to="/home/signup" className={styles.link}>
-        New here? Sign up today!
+      <Link to="/home/login" className={styles.link}>
+        Already have an account? Log in here.
       </Link>
     </section>
   );

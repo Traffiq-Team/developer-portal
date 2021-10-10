@@ -10,6 +10,7 @@ const Button = ({
   className,
   fullWidth,
   loading,
+  onClick,
 }) => {
   const buttonClassNames = classNames(
     styles.button,
@@ -27,7 +28,12 @@ const Button = ({
   };
 
   return (
-    <button type={type} className={buttonClassNames} disabled={loading}>
+    <button
+      type={type}
+      className={buttonClassNames}
+      disabled={loading}
+      onClick={onClick}
+    >
       {renderContent()}
     </button>
   );
@@ -40,6 +46,7 @@ Button.propTypes = {
   className: PropTypes.string,
   fullWidth: PropTypes.bool,
   loading: PropTypes.bool,
+  onClick: PropTypes.func,
 };
 
 Button.defaultProps = {
@@ -48,6 +55,7 @@ Button.defaultProps = {
   className: null,
   fullWidth: false,
   loading: false,
+  onClick: () => {},
 };
 
 export default Button;

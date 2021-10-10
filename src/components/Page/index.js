@@ -1,12 +1,67 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { useHistory } from 'react-router';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import {
+  ArrowLeftIcon,
+  Avatar,
+  Button,
+  LogOutIcon,
+  Menu,
+  Popover,
+  Position,
+} from 'evergreen-ui';
+import AuthContext from '../../store/AuthProvider';
 import styles from './styles.module.css';
 
-const Page = ({ children, edgePadding }) => {
+const Page = ({ children, edgePadding, showNavigation, showBack }) => {
+  const history = useHistory();
+  const { authState } = useContext(AuthContext);
+  const { username } = authState;
+
+  const handleLogoutClick = () => {
+    // TODO: Call logout endpoint
+    history.push('/home/login');
+  };
+
   return (
     <section className={styles.page}>
-      <nav className={styles.nav} />
+      {showNavigation && (
+        <nav className={styles.nav}>
+          {showBack ? (
+            <Button
+              iconBefore={ArrowLeftIcon}
+              onClick={() => history.goBack()}
+              appearance="minimal"
+              size="large"
+            >
+              Back
+            </Button>
+          ) : (
+            <span />
+          )}
+          {username ? (
+            <Popover
+              position={Position.BOTTOM_RIGHT}
+              content={
+                <Menu>
+                  <Menu.Group>
+                    <Menu.Item onSelect={handleLogoutClick} icon={LogOutIcon}>
+                      Log out
+                    </Menu.Item>
+                  </Menu.Group>
+                </Menu>
+              }
+            >
+              <span className={styles.avatar}>
+                <Avatar name={username} size={32} />
+              </span>
+            </Popover>
+          ) : (
+            <span />
+          )}
+        </nav>
+      )}
       <main
         className={classNames(
           styles.main,
@@ -15,7 +70,7 @@ const Page = ({ children, edgePadding }) => {
       >
         {children}
       </main>
-      <footer className={styles.footer}>powered by TraffiQ</footer>
+      <footer className={styles.footer}>powered by Traffiq</footer>
     </section>
   );
 };
@@ -23,10 +78,14 @@ const Page = ({ children, edgePadding }) => {
 Page.propTypes = {
   children: PropTypes.node.isRequired,
   edgePadding: PropTypes.bool,
+  showNavigation: PropTypes.bool,
+  showBack: PropTypes.bool,
 };
 
 Page.defaultProps = {
   edgePadding: true,
+  showNavigation: true,
+  showBack: true,
 };
 
 export default Page;
