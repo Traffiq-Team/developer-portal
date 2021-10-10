@@ -1,79 +1,18 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import {
-  Dialog,
-  IconButton,
-  TrashIcon,
-  EditIcon,
-  PlusIcon,
-  CleanIcon,
-  Table,
-  EmptyState,
-} from 'evergreen-ui';
-import Fuse from 'fuse.js';
+import { PlusIcon } from 'evergreen-ui';
 import Page from '../../components/Page';
-import getAllAppConfigurations from '../../api/getAllAppConfigurations';
-import deleteAppConfiguration from '../../api/deleteAppConfiguration';
 import makeDocumentTitle from '../../common/utils/makeDocumentTitle';
 import PrimaryButton from '../../components/PrimaryButton';
 import styles from './styles.module.css';
-
-const fuseOptions = {
-  keys: ['appName'],
-};
+import AppsTable from './AppsTable';
 
 const Dashboard = () => {
-  const [appConfigurations, setAppConfigurations] = useState([]);
-  const [focusedAppName, setFocusedAppName] = useState('');
-  const [searchValue, setSearchValue] = useState('');
-  const [isDeleting, setIsDeleting] = useState(false);
   const history = useHistory();
-  const fuse = new Fuse(appConfigurations, fuseOptions);
-
-  const populateAppConfigurations = async () => {
-    try {
-      const appConfigurations = await getAllAppConfigurations();
-      setAppConfigurations(appConfigurations);
-    } catch (error) {
-      console.error('error from populateAppConfigurations', error);
-    }
-  };
 
   useEffect(() => {
     makeDocumentTitle('Dashboard');
   }, []);
-
-  useEffect(() => {
-    populateAppConfigurations();
-  }, []);
-
-  const handleEditClick = (appName) => {
-    history.push(`/app/${appName}`);
-  };
-
-  const handleDeleteClick = async () => {
-    setIsDeleting(true);
-
-    try {
-      await deleteAppConfiguration(focusedAppName);
-      setFocusedAppName('');
-    } catch (error) {
-      console.error('error from handleDeleteClick', error);
-    } finally {
-      setIsDeleting(false);
-
-      // Fetch the app configurations again after making changes
-      populateAppConfigurations();
-    }
-  };
-
-  const filteredAppConfigurations = useMemo(
-    () =>
-      searchValue
-        ? fuse.search(searchValue).map(({ item }) => item)
-        : appConfigurations,
-    [searchValue, appConfigurations],
-  );
 
   return (
     <Page showBack={false}>
@@ -88,71 +27,8 @@ const Dashboard = () => {
             Create new app
           </PrimaryButton>
         </header>
-        <Table>
-          <Table.Head>
-            <Table.SearchHeaderCell
-              placeholder="Search for App name"
-              onChange={(value) => setSearchValue(value)}
-            />
-            <Table.TextHeaderCell>URL</Table.TextHeaderCell>
-            <Table.TextHeaderCell>
-              Target Latency (in milliseconds)
-            </Table.TextHeaderCell>
-            <Table.HeaderCell justifyContent="flex-end">
-              Actions
-            </Table.HeaderCell>
-          </Table.Head>
-          <Table.Body maxHeight={384}>
-            {filteredAppConfigurations.length > 0 ? (
-              filteredAppConfigurations.map(({ appName, config }) => (
-                <Table.Row key={appName}>
-                  <Table.TextCell>{appName}</Table.TextCell>
-                  <Table.TextCell>{config.url}</Table.TextCell>
-                  <Table.TextCell isNumber>
-                    {config.targetLatency}
-                  </Table.TextCell>
-                  <Table.Cell justifyContent="flex-end">
-                    <span className={styles.actions}>
-                      <IconButton
-                        icon={EditIcon}
-                        onClick={() => handleEditClick(appName)}
-                        appearance="minimal"
-                      />
-                      <IconButton
-                        icon={TrashIcon}
-                        onClick={() => setFocusedAppName(appName)}
-                        appearance="minimal"
-                        intent="danger"
-                      />
-                    </span>
-                  </Table.Cell>
-                </Table.Row>
-              ))
-            ) : (
-              <EmptyState
-                background="light"
-                title="No apps found"
-                orientation="horizontal"
-                icon={<CleanIcon color="#C1C4D6" />}
-                iconBgColor="#EDEFF5"
-                description="Start by creating a new app to see some information about it appear here."
-              />
-            )}
-          </Table.Body>
-        </Table>
+        <AppsTable />
       </section>
-      <Dialog
-        isShown={!!focusedAppName}
-        intent="danger"
-        confirmLabel="Delete"
-        title="Delete app"
-        onConfirm={handleDeleteClick}
-        onCloseComplete={() => setFocusedAppName('')}
-        isConfirmLoading={isDeleting}
-        preventBodyScrolling
-      >
-        Are you sure you want to delete <strong>{focusedAppName}</strong>?
-      </Dialog>
     </Page>
   );
 };
