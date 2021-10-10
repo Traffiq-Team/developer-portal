@@ -6,11 +6,13 @@ import Page from '../../components/Page';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import makeDocumentTitle from '../../common/utils/makeDocumentTitle';
+import PrimaryButton from '../../components/PrimaryButton';
 import styles from './styles.module.css';
 
 const Configuration = () => {
   const [url, setUrl] = useState('');
   const [targetLatency, setTargetLatency] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
 
   const { appName } = useParams();
 
@@ -37,13 +39,18 @@ const Configuration = () => {
   const handleSave = async (e) => {
     e.preventDefault();
 
+    setIsSaving(true);
+
     try {
+      console.log('saving', appName, url, targetLatency);
       await saveAppConfiguration(appName, {
         url,
         targetLatency,
       });
     } catch (error) {
       console.error('caught this error when fetching app metadata', error);
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -65,8 +72,12 @@ const Configuration = () => {
           value={targetLatency}
           onChange={(value) => setTargetLatency(value)}
         />
-        <Button type="submit">Save</Button>
       </form>
+      <div className={styles.actions}>
+        <PrimaryButton size="large" onClick={handleSave} isLoading={isSaving}>
+          Save
+        </PrimaryButton>
+      </div>
     </Page>
   );
 };
