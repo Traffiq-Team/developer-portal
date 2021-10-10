@@ -1,5 +1,5 @@
 const config = {
-  baseUrl: 'https://dashboard.traffiq.xyz',
+  baseUrl: 'http://localhost:5000',
 };
 
 export default config;

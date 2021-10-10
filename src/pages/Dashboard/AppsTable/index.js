@@ -9,6 +9,7 @@ import {
   CleanIcon,
   SearchIcon,
   Dialog,
+  Spinner,
 } from 'evergreen-ui';
 import Fuse from 'fuse.js';
 import getAllAppConfigurations from '../../../api/getAllAppConfigurations';
@@ -24,15 +25,20 @@ const AppsTable = () => {
   const [focusedAppName, setFocusedAppName] = useState('');
   const [searchValue, setSearchValue] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
   const fuse = new Fuse(apps, fuseOptions);
 
   const populateAppConfigurations = async () => {
+    setIsLoading(true);
+
     try {
       const apps = await getAllAppConfigurations();
       setApps(apps);
     } catch (error) {
       console.error('error from populateAppConfigurations', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -67,6 +73,14 @@ const AppsTable = () => {
   );
 
   const renderTableBody = () => {
+    if (isLoading) {
+      return (
+        <div className={styles.loadingContainer}>
+          <Spinner />
+        </div>
+      );
+    }
+
     // User tried searching for an app but no results show up
     if (searchValue && filteredApps.length === 0) {
       return (

@@ -15,15 +15,3 @@
   margin: 0;
   font-size: 24px;
 }
-
-.tableHeader {
-  text-align: left;
-  font-weight: bold;
-}
-
-.actions {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 16px;
-}

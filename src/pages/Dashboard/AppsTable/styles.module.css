@@ -1,0 +1,12 @@
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
+}
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  margin: 48px auto;
+}
