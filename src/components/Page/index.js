@@ -12,6 +12,7 @@ import {
   Position,
 } from 'evergreen-ui';
 import AuthContext from '../../store/AuthProvider';
+import logOutUser from '../../api/logOutUser';
 import styles from './styles.module.css';
 
 const Page = ({ children, edgePadding, showNavigation, showBack }) => {
@@ -19,9 +20,13 @@ const Page = ({ children, edgePadding, showNavigation, showBack }) => {
   const { authState } = useContext(AuthContext);
   const { username } = authState;
 
-  const handleLogoutClick = () => {
-    // TODO: Call logout endpoint
-    history.push('/home/login');
+  const handleLogoutClick = async () => {
+    try {
+      await logOutUser();
+      history.push('/home/login');
+    } catch (error) {
+      console.error('Error from logging out user', error);
+    }
   };
 
   return (
