@@ -1,12 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { ArrowLeftIcon, Button, LogOutIcon } from 'evergreen-ui';
+import {
+  ArrowLeftIcon,
+  Avatar,
+  Button,
+  LogOutIcon,
+  Menu,
+  Popover,
+  Position,
+} from 'evergreen-ui';
+import AuthContext from '../../store/AuthProvider';
 import styles from './styles.module.css';
 
 const Page = ({ children, edgePadding, showNavigation, showBack }) => {
   const history = useHistory();
+  const { authState } = useContext(AuthContext);
+  const { username } = authState;
 
   const handleLogoutClick = () => {
     // TODO: Call logout endpoint
@@ -29,14 +40,26 @@ const Page = ({ children, edgePadding, showNavigation, showBack }) => {
           ) : (
             <span />
           )}
-          <Button
-            iconBefore={LogOutIcon}
-            onClick={handleLogoutClick}
-            appearance="minimal"
-            size="large"
-          >
-            Log out
-          </Button>
+          {username ? (
+            <Popover
+              position={Position.BOTTOM_RIGHT}
+              content={
+                <Menu>
+                  <Menu.Group>
+                    <Menu.Item onSelect={handleLogoutClick} icon={LogOutIcon}>
+                      Log out
+                    </Menu.Item>
+                  </Menu.Group>
+                </Menu>
+              }
+            >
+              <span className={styles.avatar}>
+                <Avatar name={username} size={32} />
+              </span>
+            </Popover>
+          ) : (
+            <span />
+          )}
         </nav>
       )}
       <main

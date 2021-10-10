@@ -1,7 +1,8 @@
 import authRequest from '../common/utils/authRequest';
 
-function checkAuthentication(username, password) {
-  return authRequest('POST', '/users/auth');
+async function checkAuthentication(username, password) {
+  const { data } = await authRequest('POST', '/users/auth');
+  return data;
 }
 
 export default checkAuthentication;

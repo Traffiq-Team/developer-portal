@@ -3,7 +3,10 @@ import { Route, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import AuthContext from '../../store/AuthProvider';
 import checkAuthentication from '../../api/checkAuthentication';
-import { SET_AUTHENTICATED } from '../../store/AuthProvider/actions';
+import {
+  SET_AUTHENTICATED,
+  SET_USERNAME,
+} from '../../store/AuthProvider/actions';
 
 const AuthRoute = ({ exact, path, component }) => {
   const { authDispatch } = useContext(AuthContext);
@@ -12,8 +15,10 @@ const AuthRoute = ({ exact, path, component }) => {
   useEffect(() => {
     const _checkAuthentication = async () => {
       try {
-        await checkAuthentication();
+        const { username } = await checkAuthentication();
+
         authDispatch({ type: SET_AUTHENTICATED, payload: true });
+        authDispatch({ type: SET_USERNAME, payload: username });
       } catch (error) {
         authDispatch({ type: SET_AUTHENTICATED, payload: false });
         history.push('/home/login');

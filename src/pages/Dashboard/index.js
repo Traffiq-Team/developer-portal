@@ -82,6 +82,7 @@ const Dashboard = () => {
           <h1 className={styles.title}>Dashboard</h1>
           <Button
             size="large"
+            appearance="primary"
             iconBefore={PlusIcon}
             onClick={() => history.push('/create')}
           >
@@ -110,21 +111,17 @@ const Dashboard = () => {
                 <Table.TextCell isNumber>{config.targetLatency}</Table.TextCell>
                 <Table.Cell justifyContent="flex-end">
                   <span className={styles.actions}>
-                    <Tooltip content="Edit app" position={Position.TOP}>
-                      <IconButton
-                        icon={EditIcon}
-                        onClick={() => handleEditClick(appName)}
-                        appearance="minimal"
-                      />
-                    </Tooltip>
-                    <Tooltip content="Delete app" position={Position.TOP}>
-                      <IconButton
-                        icon={TrashIcon}
-                        onClick={() => setFocusedAppName(appName)}
-                        appearance="minimal"
-                        intent="danger"
-                      />
-                    </Tooltip>
+                    <IconButton
+                      icon={EditIcon}
+                      onClick={() => handleEditClick(appName)}
+                      appearance="minimal"
+                    />
+                    <IconButton
+                      icon={TrashIcon}
+                      onClick={() => setFocusedAppName(appName)}
+                      appearance="minimal"
+                      intent="danger"
+                    />
                   </span>
                 </Table.Cell>
               </Table.Row>

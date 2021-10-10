@@ -7,6 +7,7 @@
   box-sizing: border-box;
   font-size: 16px;
   transition: ease 250ms;
+  border-radius: 4px;
 }
 
 .input:focus {
