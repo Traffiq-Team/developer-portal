@@ -1,16 +1,15 @@
 import axios from 'axios';
 import config from '../../config';
 
+const baseUrl =
+  process.env.NODE_ENV === 'development'
+    ? config.dev.baseUrl
+    : config.prod.baseUrl;
+
 function authRequest(method, endpoint, data = {}) {
-  const token = localStorage.getItem('authToken');
+  const url = `${baseUrl}${endpoint}`;
 
-  const headers = {
-    Authorization: `Bearer ${token}`,
-  };
-
-  const url = `${config.baseUrl}${endpoint}`;
-
-  return axios({ method, url, data, headers, withCredentials: true });
+  return axios({ method, url, data, withCredentials: true });
 }
 
 export default authRequest;
