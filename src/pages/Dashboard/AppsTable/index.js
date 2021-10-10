@@ -113,8 +113,8 @@ const AppsTable = () => {
     return filteredApps.map(({ appName, config }) => (
       <Table.Row key={appName}>
         <Table.TextCell>{appName}</Table.TextCell>
-        <Table.TextCell>{config.url}</Table.TextCell>
-        <Table.TextCell isNumber>{config.targetLatency}</Table.TextCell>
+        <Table.TextCell>{config?.url}</Table.TextCell>
+        <Table.TextCell isNumber>{config?.targetLatency}</Table.TextCell>
         <Table.Cell justifyContent="flex-end">
           <span className={styles.actions}>
             <IconButton

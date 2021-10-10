@@ -1,44 +1,66 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
+import editAppConfiguration from '../../api/editAppConfiguration';
+import getAppConfiguration from '../../api/getAppConfiguration';
 import Page from '../../components/Page';
-import createAppConfiguration from '../../api/createAppConfiguration';
 import Input from '../../components/Input';
 import makeDocumentTitle from '../../common/utils/makeDocumentTitle';
 import PrimaryButton from '../../components/PrimaryButton';
-import TextArea from '../../components/TextArea';
+import getSpecialMessage from '../../api/getSpecialMessage';
 import saveSpecialMessage from '../../api/saveSpecialMessage';
+import TextArea from '../../components/TextArea';
 import styles from './styles.module.css';
 
-const CreateApp = () => {
-  const [appName, setAppName] = useState('');
+const EditApp = () => {
   const [url, setUrl] = useState('');
   const [targetLatency, setTargetLatency] = useState('');
   const [waitingMessage, setWaitingMessage] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const history = useHistory();
+  const { appName } = useParams();
 
   useEffect(() => {
-    makeDocumentTitle('Create New App');
+    makeDocumentTitle(`${appName} Configurations`);
   }, []);
 
-  const handleSubmit = async (e) => {
+  useEffect(() => {
+    const fetchAppMetadata = async () => {
+      try {
+        const [appConfigurationData, specialMessageData] = await Promise.all([
+          getAppConfiguration(appName),
+          getSpecialMessage(appName),
+        ]);
+
+        const { url, targetLatency } = appConfigurationData;
+        const message = specialMessageData;
+
+        setUrl(url);
+        setTargetLatency(targetLatency);
+        setWaitingMessage(message);
+      } catch (error) {
+        console.error('caught this error when fetching app metadata', error);
+      }
+    };
+
+    fetchAppMetadata();
+  }, []);
+
+  const handleSave = async (e) => {
     e.preventDefault();
 
-    setIsSubmitting(true);
+    setIsSaving(true);
 
     try {
-      // App must be created first BEFORE creating the waiting message
-      await createAppConfiguration(appName, {
+      await editAppConfiguration(appName, {
         url,
-        targetLatency: parseFloat(targetLatency),
+        targetLatency,
       });
       await saveSpecialMessage(appName, { message: waitingMessage });
-
       history.push('/dashboard');
     } catch (error) {
       console.error('caught this error when fetching app metadata', error);
     } finally {
-      setIsSubmitting(false);
+      setIsSaving(false);
     }
   };
 
@@ -46,16 +68,10 @@ const CreateApp = () => {
     <Page>
       <section className={styles.section}>
         <div className={styles.formContainer}>
-          <h1 className={styles.title}>Create a new app</h1>
+          <h1
+            className={styles.title}
+          >{`Edit app configurations for "${appName}"`}</h1>
           <form className={styles.form}>
-            <Input
-              type="text"
-              placeholder="Application name"
-              label="Application name"
-              value={appName}
-              onChange={(value) => setAppName(value)}
-              className={styles.input}
-            />
             <Input
               type="text"
               placeholder="URL"
@@ -81,17 +97,17 @@ const CreateApp = () => {
             />
             <PrimaryButton
               size="large"
-              onClick={handleSubmit}
-              isLoading={isSubmitting}
+              onClick={handleSave}
+              isLoading={isSaving}
             >
-              Submit
+              Save
             </PrimaryButton>
           </form>
         </div>
-        <div className={styles.previewContainer}></div>
+        <div className={styles.previewContainer} />
       </section>
     </Page>
   );
 };
 
-export default CreateApp;
+export default EditApp;
