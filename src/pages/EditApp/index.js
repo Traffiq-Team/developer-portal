@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import { toaster } from 'evergreen-ui';
 import editAppConfiguration from '../../api/editAppConfiguration';
 import getAppConfiguration from '../../api/getAppConfiguration';
 import Page from '../../components/Page';
@@ -42,7 +43,7 @@ const EditApp = () => {
         setTargetLatency(targetLatency);
         setWaitingMessage(message);
       } catch (error) {
-        console.error('caught this error when fetching app metadata', error);
+        toaster.danger(error.message);
       } finally {
         setIsLoading(false);
       }
@@ -64,7 +65,7 @@ const EditApp = () => {
       await saveSpecialMessage(appName, { message: waitingMessage });
       history.push('/dashboard');
     } catch (error) {
-      console.error('caught this error when fetching app metadata', error);
+      toaster.danger(error.message);
     } finally {
       setIsSaving(false);
     }

@@ -12,6 +12,7 @@ import {
   Spinner,
   Tooltip,
   Position,
+  toaster,
 } from 'evergreen-ui';
 import Fuse from 'fuse.js';
 import getAllAppConfigurations from '../../../api/getAllAppConfigurations';
@@ -38,7 +39,7 @@ const AppsTable = () => {
       const apps = await getAllAppConfigurations();
       setApps(apps);
     } catch (error) {
-      console.error('error from populateAppConfigurations', error);
+      toaster.danger(error.message);
     } finally {
       setIsLoading(false);
     }
@@ -59,7 +60,7 @@ const AppsTable = () => {
       await deleteAppConfiguration(focusedAppName);
       setFocusedAppName('');
     } catch (error) {
-      console.error('error from handleDeleteClick', error);
+      toaster.danger(error.message);
     } finally {
       setIsDeleting(false);
 

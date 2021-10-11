@@ -10,6 +10,7 @@ import {
   Menu,
   Popover,
   Position,
+  toaster,
 } from 'evergreen-ui';
 import AuthContext from '../../store/AuthProvider';
 import logOutUser from '../../api/logOutUser';
@@ -25,7 +26,7 @@ const Page = ({ children, edgePadding, showNavigation, showBack }) => {
       await logOutUser();
       history.push('/home/login');
     } catch (error) {
-      console.error('Error from logging out user', error);
+      toaster.danger(error.message);
     }
   };
 

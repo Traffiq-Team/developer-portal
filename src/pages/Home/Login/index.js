@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useHistory, Link } from 'react-router-dom';
+import { toaster } from 'evergreen-ui';
 import AuthContext from '../../../store/AuthProvider';
 import authenticateUser from '../../../api/authenticateUser';
 import {
@@ -48,7 +49,7 @@ const Login = () => {
 
       history.push('/dashboard');
     } catch (error) {
-      console.log('Error from authenticateUser');
+      toaster.danger(error.message);
     } finally {
       setIsSubmitting(false);
     }

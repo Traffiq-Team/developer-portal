@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { toaster } from 'evergreen-ui';
 import Page from '../../components/Page';
 import createAppConfiguration from '../../api/createAppConfiguration';
 import Input from '../../components/Input';
@@ -36,7 +37,7 @@ const CreateApp = () => {
 
       history.push('/dashboard');
     } catch (error) {
-      console.error('caught this error when fetching app metadata', error);
+      toaster.danger(error.message);
     } finally {
       setIsSubmitting(false);
     }

@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { toaster } from 'evergreen-ui';
 import AuthContext from '../../../store/AuthProvider';
 import { SET_AUTHENTICATED } from '../../../store/AuthProvider/actions';
 import Input from '../../../components/Input';
@@ -19,6 +20,11 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (password !== confirmedPassword) {
+      toaster.warning('Passwords must match!');
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -26,7 +32,7 @@ const Login = () => {
       authDispatch({ type: SET_AUTHENTICATED, payload: true });
       history.push('/dashboard');
     } catch (error) {
-      console.log('Error from authenticateUser');
+      toaster.danger(error.message);
     } finally {
       setIsSubmitting(false);
     }
