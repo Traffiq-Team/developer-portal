@@ -1,6 +1,6 @@
 .container {
-  height: 304px;
-  width: 540px;
+  height: 338px;
+  width: 600px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   display: flex;
   flex-direction: column;
@@ -31,7 +31,7 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  max-width: 136px;
+  max-width: 172px;
   text-align: center;
 }
 
@@ -44,12 +44,12 @@
 
 .title {
   font-weight: bold;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .customMessage {
   margin: 0;
-  font-size: 8px;
+  font-size: 10px;
 }
 
 .position {
