@@ -133,6 +133,7 @@ const EditApp = () => {
                 value={queueUrl}
                 onChange={(value) => setQueueUrl(value)}
                 className={styles.input}
+                info="The Queue URL can't be modified once you create an app. If you wish to have a different Queue URL, you may only change the subdomain when creating an app."
                 disabled
               />
               <Input
@@ -142,6 +143,7 @@ const EditApp = () => {
                 value={appUrl}
                 onChange={(value) => setAppUrl(value)}
                 className={styles.input}
+                info="The App URL can't be modified once you create an app. If you wish to have a different App URL, you must create a new app."
                 disabled
               />
               <Input

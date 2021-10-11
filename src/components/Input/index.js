@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { InfoSignIcon, Position, Tooltip } from 'evergreen-ui';
 import styles from './styles.module.css';
 
 const Input = ({
@@ -14,12 +15,18 @@ const Input = ({
   buttonAfter,
   disabled,
   required,
+  info,
 }) => {
   return (
     <div>
       {label && (
         <label className={styles.label}>
           {label} {required && <span className={styles.required}>*</span>}
+          {info && (
+            <Tooltip position={Position.TOP} content={info}>
+              <InfoSignIcon />
+            </Tooltip>
+          )}
         </label>
       )}
       <span className={styles.inputGroup}>
@@ -53,6 +60,7 @@ Input.propTypes = {
   buttonAfter: PropTypes.element,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
+  info: PropTypes.string,
 };
 
 Input.defaultProps = {
@@ -66,6 +74,7 @@ Input.defaultProps = {
   buttonAfter: null,
   disabled: false,
   required: false,
+  info: '',
 };
 
 export default Input;
