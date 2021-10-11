@@ -19,6 +19,7 @@ import TextArea from '../../components/TextArea';
 import OverlaySpinner from '../../components/OverlaySpinner';
 import deleteAppConfiguration from '../../api/deleteAppConfiguration';
 import styles from './styles.module.css';
+import QueuePreview from './QueuePreview';
 
 const EditApp = () => {
   const [url, setUrl] = useState('');
@@ -175,7 +176,9 @@ const EditApp = () => {
               </div>
             </form>
           </div>
-          <div className={styles.previewContainer} />
+          <div className={styles.previewContainer}>
+            <QueuePreview customMessage={waitingMessage} />
+          </div>
         </section>
         <Dialog
           isShown={showDeleteDialog}
