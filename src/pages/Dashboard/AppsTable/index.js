@@ -10,6 +10,8 @@ import {
   SearchIcon,
   Dialog,
   Spinner,
+  Tooltip,
+  Position,
 } from 'evergreen-ui';
 import Fuse from 'fuse.js';
 import getAllAppConfigurations from '../../../api/getAllAppConfigurations';
@@ -117,17 +119,25 @@ const AppsTable = () => {
         <Table.TextCell isNumber>{config?.targetLatency}</Table.TextCell>
         <Table.Cell justifyContent="flex-end">
           <span className={styles.actions}>
-            <IconButton
-              icon={EditIcon}
-              onClick={() => handleEditClick(appName)}
-              appearance="minimal"
-            />
-            <IconButton
-              icon={TrashIcon}
-              onClick={() => setFocusedAppName(appName)}
-              appearance="minimal"
-              intent="danger"
-            />
+            <Tooltip position={Position.TOP} showDelay={250} content="Edit app">
+              <IconButton
+                icon={EditIcon}
+                onClick={() => handleEditClick(appName)}
+                appearance="minimal"
+              />
+            </Tooltip>
+            <Tooltip
+              position={Position.TOP}
+              showDelay={500}
+              content="Delete app"
+            >
+              <IconButton
+                icon={TrashIcon}
+                onClick={() => setFocusedAppName(appName)}
+                appearance="minimal"
+                intent="danger"
+              />
+            </Tooltip>
           </span>
         </Table.Cell>
       </Table.Row>
