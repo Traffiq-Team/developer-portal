@@ -119,7 +119,7 @@ const AppsTable = () => {
         <Table.TextCell isNumber>{config?.targetLatency}</Table.TextCell>
         <Table.Cell justifyContent="flex-end">
           <span className={styles.actions}>
-            <Tooltip position={Position.TOP} showDelay={250} content="Edit app">
+            <Tooltip position={Position.TOP} showDelay={500} content="Edit app">
               <IconButton
                 icon={EditIcon}
                 onClick={() => handleEditClick(appName)}

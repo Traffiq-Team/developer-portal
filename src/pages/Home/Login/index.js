@@ -14,6 +14,7 @@ import styles from './styles.module.css';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const history = useHistory();
 
   const { authDispatch } = useContext(AuthContext);
@@ -38,6 +39,8 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setIsSubmitting(true);
+
     try {
       await authenticateUser(username, password);
 
@@ -46,6 +49,8 @@ const Login = () => {
       history.push('/dashboard');
     } catch (error) {
       console.log('Error from authenticateUser');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -69,7 +74,11 @@ const Login = () => {
           onChange={(value) => setPassword(value)}
           fullWidth
         />
-        <PrimaryButton size="large" onClick={handleSubmit}>
+        <PrimaryButton
+          size="large"
+          onClick={handleSubmit}
+          isLoading={isSubmitting}
+        >
           Log in
         </PrimaryButton>
       </form>

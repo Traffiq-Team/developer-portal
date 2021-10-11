@@ -10,6 +10,8 @@ import styles from './styles.module.css';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmedPassword, setConfirmedPassword] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const history = useHistory();
 
   const { authDispatch } = useContext(AuthContext);
@@ -17,12 +19,16 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setIsSubmitting(true);
+
     try {
       await createAccount(username, password);
       authDispatch({ type: SET_AUTHENTICATED, payload: true });
       history.push('/dashboard');
     } catch (error) {
       console.log('Error from authenticateUser');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -46,7 +52,19 @@ const Login = () => {
           onChange={(value) => setPassword(value)}
           fullWidth
         />
-        <PrimaryButton size="large" onClick={handleSubmit}>
+        <Input
+          type="password"
+          placeholder="Password (again)"
+          label="Confirm password"
+          value={confirmedPassword}
+          onChange={(value) => setConfirmedPassword(value)}
+          fullWidth
+        />
+        <PrimaryButton
+          size="large"
+          onClick={handleSubmit}
+          isLoading={isSubmitting}
+        >
           Create account
         </PrimaryButton>
       </form>
