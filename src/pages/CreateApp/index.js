@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toaster } from 'evergreen-ui';
+import validUrl from 'valid-url';
 import Page from '../../components/Page';
 import Input from '../../components/Input';
 import makeDocumentTitle from '../../common/utils/makeDocumentTitle';
@@ -38,7 +39,14 @@ const CreateApp = () => {
     }
 
     if (!isValidSubdomain(queueSubdomain)) {
-      toaster.danger('Subdomain is invalid, please try using something else.');
+      toaster.danger(
+        'Queue subdomain is invalid, please try using something else.',
+      );
+      return;
+    }
+
+    if (!validUrl.isWebUri(appUrl)) {
+      toaster.danger('App URL is invalid, please try using something else.');
       return;
     }
 
