@@ -1,22 +1,20 @@
-import React, { useState, useMemo, useEffect, Fragment } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
   Table,
   IconButton,
-  EditIcon,
   TrashIcon,
   EmptyState,
   CleanIcon,
   SearchIcon,
-  Dialog,
   Spinner,
   Tooltip,
   Position,
   toaster,
+  SettingsIcon,
 } from 'evergreen-ui';
 import Fuse from 'fuse.js';
 import getAllAppConfigurations from '../../../api/getAllAppConfigurations';
-import deleteAppConfiguration from '../../../api/deleteAppConfiguration';
 import styles from './styles.module.css';
 
 const fuseOptions = {
@@ -25,9 +23,7 @@ const fuseOptions = {
 
 const AppsTable = () => {
   const [apps, setApps] = useState([]);
-  const [focusedAppName, setFocusedAppName] = useState('');
   const [searchValue, setSearchValue] = useState('');
-  const [isDeleting, setIsDeleting] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
   const fuse = new Fuse(apps, fuseOptions);
@@ -51,22 +47,6 @@ const AppsTable = () => {
 
   const handleEditClick = (appName) => {
     history.push(`/app/${appName}`);
-  };
-
-  const handleDeleteClick = async () => {
-    setIsDeleting(true);
-
-    try {
-      await deleteAppConfiguration(focusedAppName);
-      setFocusedAppName('');
-    } catch (error) {
-      toaster.danger(error.message);
-    } finally {
-      setIsDeleting(false);
-
-      // Fetch the app configurations again after making changes
-      populateAppConfigurations();
-    }
   };
 
   const filteredApps = useMemo(
@@ -120,23 +100,11 @@ const AppsTable = () => {
         <Table.TextCell isNumber>{config?.targetLatency}</Table.TextCell>
         <Table.Cell justifyContent="flex-end">
           <span className={styles.actions}>
-            <Tooltip position={Position.TOP} showDelay={500} content="Edit app">
+            <Tooltip position={Position.TOP} showDelay={500} content="Settings">
               <IconButton
-                icon={EditIcon}
+                icon={SettingsIcon}
                 onClick={() => handleEditClick(appName)}
                 appearance="minimal"
-              />
-            </Tooltip>
-            <Tooltip
-              position={Position.TOP}
-              showDelay={500}
-              content="Delete app"
-            >
-              <IconButton
-                icon={TrashIcon}
-                onClick={() => setFocusedAppName(appName)}
-                appearance="minimal"
-                intent="danger"
               />
             </Tooltip>
           </span>
@@ -146,34 +114,20 @@ const AppsTable = () => {
   };
 
   return (
-    <Fragment>
-      <Table>
-        <Table.Head>
-          <Table.SearchHeaderCell
-            placeholder="Search for App name"
-            onChange={(value) => setSearchValue(value)}
-          />
-          <Table.TextHeaderCell>URL</Table.TextHeaderCell>
-          <Table.TextHeaderCell>
-            Target Latency (in milliseconds)
-          </Table.TextHeaderCell>
-          <Table.HeaderCell justifyContent="flex-end">Actions</Table.HeaderCell>
-        </Table.Head>
-        <Table.Body maxHeight={384}>{renderTableBody()}</Table.Body>
-      </Table>
-      <Dialog
-        isShown={!!focusedAppName}
-        intent="danger"
-        confirmLabel="Delete"
-        title="Delete app"
-        onConfirm={handleDeleteClick}
-        onCloseComplete={() => setFocusedAppName('')}
-        isConfirmLoading={isDeleting}
-        preventBodyScrolling
-      >
-        Are you sure you want to delete <strong>{focusedAppName}</strong>?
-      </Dialog>
-    </Fragment>
+    <Table>
+      <Table.Head>
+        <Table.SearchHeaderCell
+          placeholder="Search for App name"
+          onChange={(value) => setSearchValue(value)}
+        />
+        <Table.TextHeaderCell>URL</Table.TextHeaderCell>
+        <Table.TextHeaderCell>
+          Target Latency (in milliseconds)
+        </Table.TextHeaderCell>
+        <Table.HeaderCell justifyContent="flex-end">Actions</Table.HeaderCell>
+      </Table.Head>
+      <Table.Body maxHeight={384}>{renderTableBody()}</Table.Body>
+    </Table>
   );
 };
 

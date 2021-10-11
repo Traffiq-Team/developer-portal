@@ -1,6 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { IconButton, toaster, ClipboardIcon } from 'evergreen-ui';
+import {
+  IconButton,
+  toaster,
+  ClipboardIcon,
+  Button,
+  Dialog,
+} from 'evergreen-ui';
 import editAppConfiguration from '../../api/editAppConfiguration';
 import getAppConfiguration from '../../api/getAppConfiguration';
 import Page from '../../components/Page';
@@ -11,6 +17,7 @@ import getSpecialMessage from '../../api/getSpecialMessage';
 import saveSpecialMessage from '../../api/saveSpecialMessage';
 import TextArea from '../../components/TextArea';
 import OverlaySpinner from '../../components/OverlaySpinner';
+import deleteAppConfiguration from '../../api/deleteAppConfiguration';
 import styles from './styles.module.css';
 
 const EditApp = () => {
@@ -18,8 +25,10 @@ const EditApp = () => {
   const [targetLatency, setTargetLatency] = useState('');
   const [waitingMessage, setWaitingMessage] = useState('');
   const [apiKey, setApiKey] = useState('AIO21NPA979S0AF');
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const history = useHistory();
   const { appName } = useParams();
 
@@ -29,8 +38,6 @@ const EditApp = () => {
 
   useEffect(() => {
     const fetchAppMetadata = async () => {
-      setIsLoading(true);
-
       try {
         const [appConfigurationData, specialMessageData] = await Promise.all([
           getAppConfiguration(appName),
@@ -83,66 +90,106 @@ const EditApp = () => {
     }
   };
 
+  const handleDeleteClick = (e) => {
+    e.preventDefault();
+    setShowDeleteDialog(true);
+  };
+
+  const deleteApp = async () => {
+    setIsDeleting(true);
+
+    try {
+      await deleteAppConfiguration(appName);
+      history.push('/dashboard');
+    } catch (error) {
+      toaster.danger(error.message);
+    } finally {
+      setShowDeleteDialog(false);
+      setIsDeleting(false);
+    }
+  };
+
   const renderContent = () => {
     if (isLoading) {
       return <OverlaySpinner />;
     }
 
     return (
-      <section className={styles.section}>
-        <div className={styles.formContainer}>
-          <h1
-            className={styles.title}
-          >{`App configurations for "${appName}"`}</h1>
-          <form className={styles.form}>
-            <Input
-              type="text"
-              label="API Key"
-              value={apiKey}
-              buttonAfter={
-                <IconButton
-                  icon={ClipboardIcon}
+      <Fragment>
+        <section className={styles.section}>
+          <div className={styles.formContainer}>
+            <h1 className={styles.title}>{`Settings for "${appName}"`}</h1>
+            <form className={styles.form}>
+              <Input
+                type="text"
+                label="API Key"
+                value={apiKey}
+                buttonAfter={
+                  <IconButton
+                    icon={ClipboardIcon}
+                    size="large"
+                    onClick={copyApiKey}
+                  />
+                }
+                className={styles.input}
+                disabled
+              />
+              <Input
+                type="text"
+                placeholder="URL"
+                label="URL"
+                value={url}
+                onChange={(value) => setUrl(value)}
+                className={styles.input}
+              />
+              <Input
+                type="number"
+                placeholder="Target latency (in milliseconds)"
+                label="Target latency (in milliseconds)"
+                value={targetLatency}
+                onChange={(value) => setTargetLatency(value)}
+                className={styles.input}
+              />
+              <TextArea
+                placeholder="Special waiting message"
+                label="Special waiting message"
+                value={waitingMessage}
+                onChange={(value) => setWaitingMessage(value)}
+                className={styles.textArea}
+              />
+              <div className={styles.buttons}>
+                <PrimaryButton
                   size="large"
-                  onClick={copyApiKey}
-                />
-              }
-              className={styles.input}
-              disabled
-            />
-            <Input
-              type="text"
-              placeholder="URL"
-              label="URL"
-              value={url}
-              onChange={(value) => setUrl(value)}
-              className={styles.input}
-            />
-            <Input
-              type="number"
-              placeholder="Target latency (in milliseconds)"
-              label="Target latency (in milliseconds)"
-              value={targetLatency}
-              onChange={(value) => setTargetLatency(value)}
-              className={styles.input}
-            />
-            <TextArea
-              placeholder="Special waiting message"
-              label="Special waiting message"
-              value={waitingMessage}
-              onChange={(value) => setWaitingMessage(value)}
-              className={styles.textArea}
-            />
-            <PrimaryButton
-              size="large"
-              onClick={handleSave}
-              isLoading={isSaving}
-            >
-              Save
-            </PrimaryButton>
-          </form>
-        </div>
-        <div className={styles.previewContainer} />
-      </section>
+                  onClick={handleSave}
+                  isLoading={isSaving}
+                >
+                  Save
+                </PrimaryButton>
+                <Button
+                  intent="danger"
+                  size="large"
+                  onClick={handleDeleteClick}
+                >
+                  Delete
+                </Button>
+              </div>
+            </form>
+          </div>
+          <div className={styles.previewContainer} />
+        </section>
+        <Dialog
+          isShown={showDeleteDialog}
+          intent="danger"
+          confirmLabel="Delete"
+          title="Delete app"
+          onConfirm={deleteApp}
+          onCloseComplete={() => setShowDeleteDialog(false)}
+          isConfirmLoading={isDeleting}
+          preventBodyScrolling
+        >
+          Are you sure you want to delete <strong>{appName}</strong>?
+        </Dialog>
+      </Fragment>
     );
   };
 
