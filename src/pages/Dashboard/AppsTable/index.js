@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import {
   Table,
   IconButton,
-  TrashIcon,
   EmptyState,
   CleanIcon,
   SearchIcon,
@@ -14,7 +13,7 @@ import {
   SettingsIcon,
 } from 'evergreen-ui';
 import Fuse from 'fuse.js';
-import getAllAppConfigurations from '../../../api/getAllAppConfigurations';
+import getAllAppData from '../../../api/getAllAppData';
 import styles from './styles.module.css';
 
 const fuseOptions = {
@@ -32,7 +31,7 @@ const AppsTable = () => {
     setIsLoading(true);
 
     try {
-      const apps = await getAllAppConfigurations();
+      const apps = await getAllAppData();
       setApps(apps);
     } catch (error) {
       toaster.danger(error.message);
@@ -93,10 +92,11 @@ const AppsTable = () => {
     }
 
     // Render the list of apps
-    return filteredApps.map(({ appName, config }) => (
+    return filteredApps.map(({ appName, appUrl, queueUrl, config }) => (
       <Table.Row key={appName}>
         <Table.TextCell>{appName}</Table.TextCell>
-        <Table.TextCell>{config?.url}</Table.TextCell>
+        <Table.TextCell>{appUrl}</Table.TextCell>
+        <Table.TextCell>{queueUrl}</Table.TextCell>
         <Table.TextCell isNumber>{config?.targetLatency}</Table.TextCell>
         <Table.Cell justifyContent="flex-end">
           <span className={styles.actions}>
@@ -120,7 +120,8 @@ const AppsTable = () => {
           placeholder="Search for App name"
           onChange={(value) => setSearchValue(value)}
         />
-        <Table.TextHeaderCell>URL</Table.TextHeaderCell>
+        <Table.TextHeaderCell>App URL</Table.TextHeaderCell>
+        <Table.TextHeaderCell>Queue URL</Table.TextHeaderCell>
         <Table.TextHeaderCell>
           Target Latency (in milliseconds)
         </Table.TextHeaderCell>

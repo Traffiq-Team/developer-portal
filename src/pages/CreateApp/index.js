@@ -2,19 +2,18 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toaster } from 'evergreen-ui';
 import Page from '../../components/Page';
-import createAppConfiguration from '../../api/createAppConfiguration';
 import Input from '../../components/Input';
 import makeDocumentTitle from '../../common/utils/makeDocumentTitle';
 import PrimaryButton from '../../components/PrimaryButton';
 import TextArea from '../../components/TextArea';
-import saveSpecialMessage from '../../api/saveSpecialMessage';
 import QueuePreview from '../../components/QueuePreview';
 import isValidSubdomain from '../../common/utils/isValidSubdomain';
+import createApp from '../../api/createApp';
 import styles from './styles.module.css';
 
 const CreateApp = () => {
   const [appName, setAppName] = useState('');
-  const [url, setUrl] = useState('');
+  const [appUrl, setAppUrl] = useState('');
   const [queueSubdomain, setQueueSubdomain] = useState('');
   const [targetLatency, setTargetLatency] = useState('');
   const [waitingMessage, setWaitingMessage] = useState('');
@@ -22,8 +21,8 @@ const CreateApp = () => {
   const history = useHistory();
 
   const canSubmit = useMemo(
-    () => appName && url && targetLatency,
-    [appName, url, targetLatency],
+    () => appName && appUrl && targetLatency,
+    [appName, appUrl, targetLatency],
   );
 
   useEffect(() => {
@@ -46,12 +45,13 @@ const CreateApp = () => {
     setIsSubmitting(true);
 
     try {
-      // App must be created first BEFORE creating the waiting message
-      await createAppConfiguration(appName, {
-        url,
-        targetLatency: parseFloat(targetLatency),
-      });
-      await saveSpecialMessage(appName, { message: waitingMessage });
+      await createApp(
+        appName,
+        queueSubdomain,
+        appUrl,
+        parseFloat(targetLatency),
+        waitingMessage,
+      );
 
       history.push('/dashboard');
     } catch (error) {
@@ -80,7 +80,7 @@ const CreateApp = () => {
               type="text"
               placeholder="Queue subdomain"
               label="Queue Subdomain"
-              value={url}
+              value={queueSubdomain}
               onChange={(value) => setQueueSubdomain(value)}
               className={styles.input}
               required
@@ -89,8 +89,8 @@ const CreateApp = () => {
               type="text"
               placeholder="App URL"
               label="App URL"
-              value={url}
-              onChange={(value) => setUrl(value)}
+              value={appUrl}
+              onChange={(value) => setAppUrl(value)}
               className={styles.input}
               required
             />

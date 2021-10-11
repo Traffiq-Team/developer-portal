@@ -7,22 +7,21 @@ import {
   Button,
   Dialog,
 } from 'evergreen-ui';
-import editAppConfiguration from '../../api/editAppConfiguration';
-import getAppConfiguration from '../../api/getAppConfiguration';
 import Page from '../../components/Page';
 import Input from '../../components/Input';
 import makeDocumentTitle from '../../common/utils/makeDocumentTitle';
 import PrimaryButton from '../../components/PrimaryButton';
-import getSpecialMessage from '../../api/getSpecialMessage';
-import saveSpecialMessage from '../../api/saveSpecialMessage';
 import TextArea from '../../components/TextArea';
 import OverlaySpinner from '../../components/OverlaySpinner';
-import deleteAppConfiguration from '../../api/deleteAppConfiguration';
+import deleteApp from '../../api/deleteApp';
 import QueuePreview from '../../components/QueuePreview';
+import saveApp from '../../api/saveApp';
+import getAppData from '../../api/getAppData';
 import styles from './styles.module.css';
 
 const EditApp = () => {
-  const [url, setUrl] = useState('');
+  const [appUrl, setAppUrl] = useState('');
+  const [queueUrl, setQueueUrl] = useState('');
   const [targetLatency, setTargetLatency] = useState('');
   const [waitingMessage, setWaitingMessage] = useState('');
   const [apiKey, setApiKey] = useState('AIO21NPA979S0AF');
@@ -38,17 +37,13 @@ const EditApp = () => {
   }, []);
 
   useEffect(() => {
-    const fetchAppMetadata = async () => {
+    const fetchAppData = async () => {
       try {
-        const [appConfigurationData, specialMessageData] = await Promise.all([
-          getAppConfiguration(appName),
-          getSpecialMessage(appName),
-        ]);
+        const { appUrl, config, message, queueUrl } = await getAppData(appName);
+        const { targetLatency } = config;
 
-        const { url, targetLatency } = appConfigurationData;
-        const message = specialMessageData;
-
-        setUrl(url);
+        setAppUrl(appUrl);
+        setQueueUrl(queueUrl);
         setTargetLatency(targetLatency);
         setWaitingMessage(message);
       } catch (error) {
@@ -58,7 +53,7 @@ const EditApp = () => {
       }
     };
 
-    fetchAppMetadata();
+    fetchAppData();
   }, []);
 
   const handleSave = async (e) => {
@@ -67,11 +62,7 @@ const EditApp = () => {
     setIsSaving(true);
 
     try {
-      await editAppConfiguration(appName, {
-        url,
-        targetLatency,
-      });
-      await saveSpecialMessage(appName, { message: waitingMessage });
+      await saveApp(appName, targetLatency, waitingMessage);
       history.push('/dashboard');
     } catch (error) {
       toaster.danger(error.message);
@@ -96,11 +87,11 @@ const EditApp = () => {
     setShowDeleteDialog(true);
   };
 
-  const deleteApp = async () => {
+  const handleDelete = async () => {
     setIsDeleting(true);
 
     try {
-      await deleteAppConfiguration(appName);
+      await deleteApp(appName);
       history.push('/dashboard');
     } catch (error) {
       toaster.danger(error.message);
@@ -137,10 +128,10 @@ const EditApp = () => {
               />
               <Input
                 type="text"
-                placeholder="Queue Subdomain"
-                label="Queue Subdomain"
-                value={url}
-                onChange={(value) => setUrl(value)}
+                placeholder="Queue URL"
+                label="Queue URL"
+                value={queueUrl}
+                onChange={(value) => setQueueUrl(value)}
                 className={styles.input}
                 disabled
               />
@@ -148,8 +139,8 @@ const EditApp = () => {
                 type="text"
                 placeholder="App URL"
                 label="App URL"
-                value={url}
-                onChange={(value) => setUrl(value)}
+                value={appUrl}
+                onChange={(value) => setAppUrl(value)}
                 className={styles.input}
                 disabled
               />
@@ -195,7 +186,7 @@ const EditApp = () => {
           intent="danger"
           confirmLabel="Delete"
           title="Delete app"
-          onConfirm={deleteApp}
+          onConfirm={handleDelete}
           onCloseComplete={() => setShowDeleteDialog(false)}
           isConfirmLoading={isDeleting}
           preventBodyScrolling
