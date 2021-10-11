@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { toaster } from 'evergreen-ui';
+import { IconButton, toaster, ClipboardIcon } from 'evergreen-ui';
 import editAppConfiguration from '../../api/editAppConfiguration';
 import getAppConfiguration from '../../api/getAppConfiguration';
 import Page from '../../components/Page';
@@ -17,6 +17,7 @@ const EditApp = () => {
   const [url, setUrl] = useState('');
   const [targetLatency, setTargetLatency] = useState('');
   const [waitingMessage, setWaitingMessage] = useState('');
+  const [apiKey, setApiKey] = useState('AIO21NPA979S0AF');
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const history = useHistory();
@@ -71,6 +72,17 @@ const EditApp = () => {
     }
   };
 
+  const copyApiKey = async (e) => {
+    e.preventDefault();
+
+    try {
+      await navigator.clipboard.writeText(apiKey);
+      toaster.success('API Key copied!');
+    } catch (error) {
+      toaster.danger('Could not copy API Key to clipboard.');
+    }
+  };
+
   const renderContent = () => {
     if (isLoading) {
       return <OverlaySpinner />;
@@ -81,8 +93,22 @@ const EditApp = () => {
         <div className={styles.formContainer}>
           <h1
             className={styles.title}
-          >{`Edit app configurations for "${appName}"`}</h1>
+          >{`App configurations for "${appName}"`}</h1>
           <form className={styles.form}>
+            <Input
+              type="text"
+              label="API Key"
+              value={apiKey}
+              buttonAfter={
+                <IconButton
+                  icon={ClipboardIcon}
+                  size="large"
+                  onClick={copyApiKey}
+                />
+              }
+              className={styles.input}
+              disabled
+            />
             <Input
               type="text"
               placeholder="URL"

@@ -11,22 +11,29 @@ const Input = ({
   label,
   fullWidth,
   className,
+  buttonAfter,
+  disabled,
 }) => {
   return (
-    <span>
+    <div>
       {label && <label className={styles.label}>{label}</label>}
-      <input
-        className={classNames(
-          styles.input,
-          className,
-          fullWidth && styles.fullWidth,
-        )}
-        type={type}
-        placeholder={placeholder}
-        onChange={(e) => onChange(e.target.value)}
-        value={value}
-      />
-    </span>
+      <span className={styles.inputGroup}>
+        <input
+          className={classNames(
+            styles.input,
+            className,
+            fullWidth && styles.fullWidth,
+            disabled && styles.disabled,
+          )}
+          type={type}
+          placeholder={placeholder}
+          onChange={(e) => onChange(e.target.value)}
+          value={value}
+          disabled={disabled}
+        />
+        {buttonAfter}
+      </span>
+    </div>
   );
 };
 
@@ -38,6 +45,8 @@ Input.propTypes = {
   label: PropTypes.string,
   fullWidth: PropTypes.bool,
   className: PropTypes.string,
+  buttonAfter: PropTypes.element,
+  disabled: PropTypes.bool,
 };
 
 Input.defaultProps = {
@@ -48,6 +57,8 @@ Input.defaultProps = {
   label: '',
   fullWidth: false,
   className: null,
+  buttonAfter: null,
+  disabled: false,
 };
 
 export default Input;

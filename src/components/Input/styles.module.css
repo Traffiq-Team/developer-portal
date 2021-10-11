@@ -27,3 +27,15 @@
 .fullWidth {
   width: 100%;
 }
+
+.inputGroup {
+  display: flex;
+}
+
+.disabled {
+  color: rgb(124, 124, 124);
+}
+
+.disabled:hover {
+  cursor: not-allowed;
+}
