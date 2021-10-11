@@ -39,3 +39,7 @@
 .disabled:hover {
   cursor: not-allowed;
 }
+
+.required {
+  color: #D14343;
+}

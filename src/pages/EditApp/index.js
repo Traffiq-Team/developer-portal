@@ -137,11 +137,21 @@ const EditApp = () => {
               />
               <Input
                 type="text"
-                placeholder="URL"
-                label="URL"
+                placeholder="Queue Subdomain"
+                label="Queue Subdomain"
                 value={url}
                 onChange={(value) => setUrl(value)}
                 className={styles.input}
+                disabled
+              />
+              <Input
+                type="text"
+                placeholder="App URL"
+                label="App URL"
+                value={url}
+                onChange={(value) => setUrl(value)}
+                className={styles.input}
+                disabled
               />
               <Input
                 type="number"

@@ -13,10 +13,15 @@ const Input = ({
   className,
   buttonAfter,
   disabled,
+  required,
 }) => {
   return (
     <div>
-      {label && <label className={styles.label}>{label}</label>}
+      {label && (
+        <label className={styles.label}>
+          {label} {required && <span className={styles.required}>*</span>}
+        </label>
+      )}
       <span className={styles.inputGroup}>
         <input
           className={classNames(
@@ -47,6 +52,7 @@ Input.propTypes = {
   className: PropTypes.string,
   buttonAfter: PropTypes.element,
   disabled: PropTypes.bool,
+  required: PropTypes.bool,
 };
 
 Input.defaultProps = {
@@ -59,6 +65,7 @@ Input.defaultProps = {
   className: null,
   buttonAfter: null,
   disabled: false,
+  required: false,
 };
 
 export default Input;

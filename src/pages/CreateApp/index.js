@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toaster } from 'evergreen-ui';
 import Page from '../../components/Page';
@@ -9,15 +9,22 @@ import PrimaryButton from '../../components/PrimaryButton';
 import TextArea from '../../components/TextArea';
 import saveSpecialMessage from '../../api/saveSpecialMessage';
 import QueuePreview from '../../components/QueuePreview';
+import isValidSubdomain from '../../common/utils/isValidSubdomain';
 import styles from './styles.module.css';
 
 const CreateApp = () => {
   const [appName, setAppName] = useState('');
   const [url, setUrl] = useState('');
+  const [queueSubdomain, setQueueSubdomain] = useState('');
   const [targetLatency, setTargetLatency] = useState('');
   const [waitingMessage, setWaitingMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const history = useHistory();
+
+  const canSubmit = useMemo(
+    () => appName && url && targetLatency,
+    [appName, url, targetLatency],
+  );
 
   useEffect(() => {
     makeDocumentTitle('Create New App');
@@ -25,6 +32,16 @@ const CreateApp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!canSubmit) {
+      toaster.danger('One or more required input fields are missing values.');
+      return;
+    }
+
+    if (!isValidSubdomain(queueSubdomain)) {
+      toaster.danger('Subdomain is invalid, please try using something else.');
+      return;
+    }
 
     setIsSubmitting(true);
 
@@ -57,14 +74,25 @@ const CreateApp = () => {
               value={appName}
               onChange={(value) => setAppName(value)}
               className={styles.input}
+              required
             />
             <Input
               type="text"
-              placeholder="URL"
-              label="URL"
+              placeholder="Queue subdomain"
+              label="Queue Subdomain"
+              value={url}
+              onChange={(value) => setQueueSubdomain(value)}
+              className={styles.input}
+              required
+            />
+            <Input
+              type="text"
+              placeholder="App URL"
+              label="App URL"
               value={url}
               onChange={(value) => setUrl(value)}
               className={styles.input}
+              required
             />
             <Input
               type="number"
@@ -73,6 +101,7 @@ const CreateApp = () => {
               value={targetLatency}
               onChange={(value) => setTargetLatency(value)}
               className={styles.input}
+              required
             />
             <TextArea
               placeholder="Special waiting message"
