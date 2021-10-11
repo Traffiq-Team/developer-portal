@@ -9,12 +9,14 @@ import PrimaryButton from '../../components/PrimaryButton';
 import getSpecialMessage from '../../api/getSpecialMessage';
 import saveSpecialMessage from '../../api/saveSpecialMessage';
 import TextArea from '../../components/TextArea';
+import OverlaySpinner from '../../components/OverlaySpinner';
 import styles from './styles.module.css';
 
 const EditApp = () => {
   const [url, setUrl] = useState('');
   const [targetLatency, setTargetLatency] = useState('');
   const [waitingMessage, setWaitingMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const history = useHistory();
   const { appName } = useParams();
@@ -25,6 +27,8 @@ const EditApp = () => {
 
   useEffect(() => {
     const fetchAppMetadata = async () => {
+      setIsLoading(true);
+
       try {
         const [appConfigurationData, specialMessageData] = await Promise.all([
           getAppConfiguration(appName),
@@ -39,6 +43,8 @@ const EditApp = () => {
         setWaitingMessage(message);
       } catch (error) {
         console.error('caught this error when fetching app metadata', error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -64,8 +70,12 @@ const EditApp = () => {
     }
   };
 
-  return (
-    <Page>
+  const renderContent = () => {
+    if (isLoading) {
+      return <OverlaySpinner />;
+    }
+
+    return (
       <section className={styles.section}>
         <div className={styles.formContainer}>
           <h1
@@ -106,8 +116,10 @@ const EditApp = () => {
         </div>
         <div className={styles.previewContainer} />
       </section>
-    </Page>
-  );
+    );
+  };
+
+  return <Page>{renderContent()}</Page>;
 };
 
 export default EditApp;
