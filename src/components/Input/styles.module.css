@@ -3,7 +3,8 @@
   border: none;
   outline: none;
   background-color: #f0f0f0;
-  padding: 12px 16px;
+  padding: 1px 8px;
+  height: 40px;
   box-sizing: border-box;
   font-size: 16px;
   border-radius: 4px;
