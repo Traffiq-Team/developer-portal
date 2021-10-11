@@ -8,6 +8,7 @@ import makeDocumentTitle from '../../common/utils/makeDocumentTitle';
 import PrimaryButton from '../../components/PrimaryButton';
 import TextArea from '../../components/TextArea';
 import saveSpecialMessage from '../../api/saveSpecialMessage';
+import QueuePreview from '../../components/QueuePreview';
 import styles from './styles.module.css';
 
 const CreateApp = () => {
@@ -89,7 +90,9 @@ const CreateApp = () => {
             </PrimaryButton>
           </form>
         </div>
-        <div className={styles.previewContainer}></div>
+        <div className={styles.previewContainer}>
+          <QueuePreview customMessage={waitingMessage} />
+        </div>
       </section>
     </Page>
   );

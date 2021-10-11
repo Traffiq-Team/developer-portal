@@ -18,8 +18,8 @@ import saveSpecialMessage from '../../api/saveSpecialMessage';
 import TextArea from '../../components/TextArea';
 import OverlaySpinner from '../../components/OverlaySpinner';
 import deleteAppConfiguration from '../../api/deleteAppConfiguration';
+import QueuePreview from '../../components/QueuePreview';
 import styles from './styles.module.css';
-import QueuePreview from './QueuePreview';
 
 const EditApp = () => {
   const [url, setUrl] = useState('');

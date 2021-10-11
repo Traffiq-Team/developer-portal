@@ -21,7 +21,7 @@ const QueuePreview = ({ customMessage }) => {
           <img src={blocksLoading} className={styles.loading} />
         </div>
       </div>
-      <div className={styles.footer}>Powered by Traffiq</div>
+      <div className={styles.footer}>powered by Traffiq</div>
     </div>
   );
 };
