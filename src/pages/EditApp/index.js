@@ -1,12 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import {
-  IconButton,
-  toaster,
-  ClipboardIcon,
-  Button,
-  Dialog,
-} from 'evergreen-ui';
+import { toaster, Button, Dialog } from 'evergreen-ui';
 import Page from '../../components/Page';
 import Input from '../../components/Input';
 import makeDocumentTitle from '../../common/utils/makeDocumentTitle';
@@ -19,12 +13,13 @@ import saveApp from '../../api/saveApp';
 import getAppData from '../../api/getAppData';
 import styles from './styles.module.css';
 
+const PUBLIC_KEY_URL = 'https://api.traffiq.xyz/publicKey';
+
 const EditApp = () => {
   const [appUrl, setAppUrl] = useState('');
   const [queueUrl, setQueueUrl] = useState('');
   const [targetLatency, setTargetLatency] = useState('');
   const [specialTitle, setSpecialTitle] = useState('');
-  const [apiKey, setApiKey] = useState('AIO21NPA979S0AF');
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -71,17 +66,6 @@ const EditApp = () => {
     }
   };
 
-  const copyApiKey = async (e) => {
-    e.preventDefault();
-
-    try {
-      await navigator.clipboard.writeText(apiKey);
-      toaster.success('API Key copied!');
-    } catch (error) {
-      toaster.danger('Could not copy API Key to clipboard.');
-    }
-  };
-
   const handleDeleteClick = (e) => {
     e.preventDefault();
     setShowDeleteDialog(true);
@@ -112,20 +96,6 @@ const EditApp = () => {
           <div className={styles.formContainer}>
             <h1 className={styles.title}>{`"${appName}" settings`}</h1>
             <form className={styles.form}>
-              <Input
-                type="text"
-                label="API Key"
-                value={apiKey}
-                buttonAfter={
-                  <IconButton
-                    icon={ClipboardIcon}
-                    size="large"
-                    onClick={copyApiKey}
-                  />
-                }
-                className={styles.input}
-                disabled
-              />
               <Input
                 type="text"
                 placeholder="Queue URL"
@@ -169,6 +139,13 @@ const EditApp = () => {
                 >
                   Save
                 </PrimaryButton>
+                <Button
+                  intent="default"
+                  size="large"
+                  onClick={() => window.open(PUBLIC_KEY_URL, '_blank').focus()}
+                >
+                  Download Public Key
+                </Button>
                 <Button
                   intent="danger"
                   size="large"
