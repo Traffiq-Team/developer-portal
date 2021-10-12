@@ -1,17 +1,5 @@
-.container {
+.content {
   display: flex;
   flex-direction: column;
   gap: 16px;
-}
-
-.header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.title {
-  margin: 0;
-  font-size: 24px;
 }

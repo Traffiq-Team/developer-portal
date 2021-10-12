@@ -6,7 +6,6 @@ import Page from '../../components/Page';
 import Input from '../../components/Input';
 import makeDocumentTitle from '../../common/utils/makeDocumentTitle';
 import PrimaryButton from '../../components/PrimaryButton';
-import TextArea from '../../components/TextArea';
 import QueuePreview from '../../components/QueuePreview';
 import isValidSubdomain from '../../common/utils/isValidSubdomain';
 import createApp from '../../api/createApp';
@@ -17,7 +16,7 @@ const CreateApp = () => {
   const [appUrl, setAppUrl] = useState('');
   const [queueSubdomain, setQueueSubdomain] = useState('');
   const [targetLatency, setTargetLatency] = useState('');
-  const [waitingMessage, setWaitingMessage] = useState('');
+  const [specialTitle, setSpecialTitle] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const history = useHistory();
 
@@ -63,7 +62,7 @@ const CreateApp = () => {
         queueSubdomain,
         appUrl,
         parseFloat(targetLatency),
-        waitingMessage,
+        specialTitle,
       );
 
       history.push('/dashboard');
@@ -92,7 +91,7 @@ const CreateApp = () => {
             <Input
               type="text"
               placeholder="Queue subdomain"
-              label="Queue Subdomain"
+              label="Queue subdomain"
               value={queueSubdomain}
               onChange={(value) => setQueueSubdomain(value)}
               className={styles.input}
@@ -118,12 +117,13 @@ const CreateApp = () => {
               className={styles.input}
               required
             />
-            <TextArea
-              placeholder="Special waiting message"
-              label="Special waiting message"
-              value={waitingMessage}
-              onChange={(value) => setWaitingMessage(value)}
-              className={styles.textArea}
+            <Input
+              type="text"
+              placeholder="Special title"
+              label="Special title"
+              value={specialTitle}
+              onChange={(value) => setSpecialTitle(value)}
+              className={styles.input}
             />
             <PrimaryButton
               size="large"
@@ -135,10 +135,7 @@ const CreateApp = () => {
           </form>
         </div>
         <div className={styles.previewContainer}>
-          <QueuePreview
-            customMessage={waitingMessage}
-            queueUrl={previewQueueUrl}
-          />
+          <QueuePreview customTitle={specialTitle} queueUrl={previewQueueUrl} />
         </div>
       </section>
     </Page>

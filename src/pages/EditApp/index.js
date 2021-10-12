@@ -23,7 +23,7 @@ const EditApp = () => {
   const [appUrl, setAppUrl] = useState('');
   const [queueUrl, setQueueUrl] = useState('');
   const [targetLatency, setTargetLatency] = useState('');
-  const [waitingMessage, setWaitingMessage] = useState('');
+  const [specialTitle, setSpecialTitle] = useState('');
   const [apiKey, setApiKey] = useState('AIO21NPA979S0AF');
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
@@ -45,7 +45,7 @@ const EditApp = () => {
         setAppUrl(appUrl);
         setQueueUrl(queueUrl);
         setTargetLatency(targetLatency);
-        setWaitingMessage(message);
+        setSpecialTitle(message);
       } catch (error) {
         toaster.danger(error.message);
       } finally {
@@ -62,7 +62,7 @@ const EditApp = () => {
     setIsSaving(true);
 
     try {
-      await saveApp(appName, targetLatency, waitingMessage);
+      await saveApp(appName, targetLatency, specialTitle);
       history.push('/dashboard');
     } catch (error) {
       toaster.danger(error.message);
@@ -157,8 +157,8 @@ const EditApp = () => {
               <TextArea
                 placeholder="Special waiting message"
                 label="Special waiting message"
-                value={waitingMessage}
-                onChange={(value) => setWaitingMessage(value)}
+                value={specialTitle}
+                onChange={(value) => setSpecialTitle(value)}
                 className={styles.textArea}
               />
               <div className={styles.buttons}>
@@ -180,7 +180,7 @@ const EditApp = () => {
             </form>
           </div>
           <div className={styles.previewContainer}>
-            <QueuePreview customMessage={waitingMessage} queueUrl={queueUrl} />
+            <QueuePreview customTitle={specialTitle} queueUrl={queueUrl} />
           </div>
         </section>
         <Dialog

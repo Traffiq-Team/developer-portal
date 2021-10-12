@@ -11,9 +11,11 @@ import {
   Position,
   toaster,
   SettingsIcon,
+  PlusIcon,
 } from 'evergreen-ui';
 import Fuse from 'fuse.js';
 import getAllAppData from '../../../api/getAllAppData';
+import PrimaryButton from '../../../components/PrimaryButton';
 import styles from './styles.module.css';
 
 const fuseOptions = {
@@ -114,21 +116,33 @@ const AppsTable = () => {
   };
 
   return (
-    <Table>
-      <Table.Head>
-        <Table.SearchHeaderCell
-          placeholder="Search for App name"
-          onChange={(value) => setSearchValue(value)}
-        />
-        <Table.TextHeaderCell>App URL</Table.TextHeaderCell>
-        <Table.TextHeaderCell>Queue URL</Table.TextHeaderCell>
-        <Table.TextHeaderCell>
-          Target Latency (in milliseconds)
-        </Table.TextHeaderCell>
-        <Table.HeaderCell justifyContent="flex-end">Actions</Table.HeaderCell>
-      </Table.Head>
-      <Table.Body maxHeight={384}>{renderTableBody()}</Table.Body>
-    </Table>
+    <section className={styles.section}>
+      <header className={styles.header}>
+        <h1 className={styles.title}>Configured Apps</h1>
+        <PrimaryButton
+          size="large"
+          iconBefore={PlusIcon}
+          onClick={() => history.push('/create')}
+        >
+          Create new app
+        </PrimaryButton>
+      </header>
+      <Table>
+        <Table.Head>
+          <Table.SearchHeaderCell
+            placeholder="Search for App name"
+            onChange={(value) => setSearchValue(value)}
+          />
+          <Table.TextHeaderCell>App URL</Table.TextHeaderCell>
+          <Table.TextHeaderCell>Queue URL</Table.TextHeaderCell>
+          <Table.TextHeaderCell>
+            Target Latency (in milliseconds)
+          </Table.TextHeaderCell>
+          <Table.HeaderCell justifyContent="flex-end">Actions</Table.HeaderCell>
+        </Table.Head>
+        <Table.Body maxHeight={384}>{renderTableBody()}</Table.Body>
+      </Table>
+    </section>
   );
 };
 
