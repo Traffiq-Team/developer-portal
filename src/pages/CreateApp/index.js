@@ -96,6 +96,7 @@ const CreateApp = () => {
               value={queueSubdomain}
               onChange={(value) => setQueueSubdomain(value)}
               className={styles.input}
+              info="The subdomain CANNOT be modified after you create an app."
               required
             />
             <Input
@@ -105,6 +106,7 @@ const CreateApp = () => {
               value={appUrl}
               onChange={(value) => setAppUrl(value)}
               className={styles.input}
+              info="The URL CANNOT be modified once you create an app."
               required
             />
             <Input

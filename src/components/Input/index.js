@@ -18,10 +18,12 @@ const Input = ({
   info,
 }) => {
   return (
-    <div>
+    <div className={styles.container}>
       {label && (
         <label className={styles.label}>
-          {label} {required && <span className={styles.required}>*</span>}
+          <span>
+            {label} {required && <span className={styles.required}>*</span>}
+          </span>
           {info && (
             <Tooltip position={Position.TOP} content={info}>
               <InfoSignIcon />
