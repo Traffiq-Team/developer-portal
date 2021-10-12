@@ -4,7 +4,11 @@ import styles from './styles.module.css';
 
 const OverlaySpinner = () => {
   return (
-    <Overlay isShown>
+    <Overlay
+      shouldCloseOnClick={false}
+      shouldCloseOnEscapePress={false}
+      isShown
+    >
       <div className={styles.spinnerContainer}>
         <Spinner size={72} className={styles.spinner} />
       </div>
