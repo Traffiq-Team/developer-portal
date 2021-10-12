@@ -1,0 +1,26 @@
+.title {
+  margin: 0;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tab {
+  font-size: 14px;
+}
+
+.content {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.codeSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}

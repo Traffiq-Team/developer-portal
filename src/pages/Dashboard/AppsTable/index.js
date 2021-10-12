@@ -118,7 +118,7 @@ const AppsTable = () => {
   return (
     <section className={styles.section}>
       <header className={styles.header}>
-        <h1 className={styles.title}>Configured Apps</h1>
+        <h2 className={styles.title}>Configured Apps</h2>
         <PrimaryButton
           size="large"
           iconBefore={PlusIcon}

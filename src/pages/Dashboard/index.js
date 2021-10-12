@@ -3,6 +3,7 @@ import Page from '../../components/Page';
 import makeDocumentTitle from '../../common/utils/makeDocumentTitle';
 import styles from './styles.module.css';
 import AppsTable from './AppsTable';
+import CodeIntegration from './CodeIntegration';
 
 const Dashboard = () => {
   useEffect(() => {
@@ -13,6 +14,7 @@ const Dashboard = () => {
     <Page showBack={false}>
       <section className={styles.content}>
         <AppsTable />
+        <CodeIntegration />
       </section>
     </Page>
   );
