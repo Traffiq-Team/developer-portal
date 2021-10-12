@@ -32,7 +32,7 @@ const CreateApp = () => {
   );
 
   useEffect(() => {
-    makeDocumentTitle('Create New App');
+    makeDocumentTitle('Create a new app');
   }, []);
 
   const handleSubmit = async (e) => {

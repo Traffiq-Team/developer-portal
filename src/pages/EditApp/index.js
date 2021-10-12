@@ -33,7 +33,7 @@ const EditApp = () => {
   const { appName } = useParams();
 
   useEffect(() => {
-    makeDocumentTitle(`${appName} Configurations`);
+    makeDocumentTitle(`${appName} settings`);
   }, []);
 
   useEffect(() => {
@@ -110,7 +110,7 @@ const EditApp = () => {
       <Fragment>
         <section className={styles.section}>
           <div className={styles.formContainer}>
-            <h1 className={styles.title}>{`Settings for "${appName}"`}</h1>
+            <h1 className={styles.title}>{`"${appName}" settings`}</h1>
             <form className={styles.form}>
               <Input
                 type="text"
