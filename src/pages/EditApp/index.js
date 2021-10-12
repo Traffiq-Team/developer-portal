@@ -124,12 +124,13 @@ const EditApp = () => {
                 onChange={(value) => setTargetLatency(value)}
                 className={styles.input}
               />
-              <TextArea
-                placeholder="Special waiting message"
-                label="Special waiting message"
+              <Input
+                type="text"
+                placeholder="Special title"
+                label="Special title"
                 value={specialTitle}
                 onChange={(value) => setSpecialTitle(value)}
-                className={styles.textArea}
+                className={styles.input}
               />
               <div className={styles.buttons}>
                 <PrimaryButton
