@@ -28,3 +28,7 @@
   justify-content: center;
   margin: 48px auto;
 }
+
+.queueUrl {
+  color: inherit;
+}

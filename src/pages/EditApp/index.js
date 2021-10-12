@@ -5,7 +5,6 @@ import Page from '../../components/Page';
 import Input from '../../components/Input';
 import makeDocumentTitle from '../../common/utils/makeDocumentTitle';
 import PrimaryButton from '../../components/PrimaryButton';
-import TextArea from '../../components/TextArea';
 import OverlaySpinner from '../../components/OverlaySpinner';
 import deleteApp from '../../api/deleteApp';
 import QueuePreview from '../../components/QueuePreview';

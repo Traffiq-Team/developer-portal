@@ -98,7 +98,16 @@ const AppsTable = () => {
       <Table.Row key={appName}>
         <Table.TextCell>{appName}</Table.TextCell>
         <Table.TextCell>{appUrl}</Table.TextCell>
-        <Table.TextCell>{queueUrl}</Table.TextCell>
+        <Table.TextCell>
+          <a
+            className={styles.queueUrl}
+            href={queueUrl}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {queueUrl}
+          </a>
+        </Table.TextCell>
         <Table.TextCell isNumber>{config?.targetLatency}</Table.TextCell>
         <Table.Cell justifyContent="flex-end">
           <span className={styles.actions}>
