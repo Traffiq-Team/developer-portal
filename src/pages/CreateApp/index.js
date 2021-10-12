@@ -21,6 +21,11 @@ const CreateApp = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const history = useHistory();
 
+  const previewQueueUrl = useMemo(
+    () => queueSubdomain && `${queueSubdomain}.traffiq.live`,
+    [queueSubdomain],
+  );
+
   const canSubmit = useMemo(
     () => appName && appUrl && targetLatency,
     [appName, appUrl, targetLatency],
@@ -128,7 +133,10 @@ const CreateApp = () => {
           </form>
         </div>
         <div className={styles.previewContainer}>
-          <QueuePreview customMessage={waitingMessage} />
+          <QueuePreview
+            customMessage={waitingMessage}
+            queueUrl={previewQueueUrl}
+          />
         </div>
       </section>
     </Page>

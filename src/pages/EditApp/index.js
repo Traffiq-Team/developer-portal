@@ -180,7 +180,7 @@ const EditApp = () => {
             </form>
           </div>
           <div className={styles.previewContainer}>
-            <QueuePreview customMessage={waitingMessage} />
+            <QueuePreview customMessage={waitingMessage} queueUrl={queueUrl} />
           </div>
         </section>
         <Dialog
