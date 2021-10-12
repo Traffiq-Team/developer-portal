@@ -3,7 +3,7 @@ import { CodeBlock, zenburn } from 'react-code-blocks';
 import { Tablist, Tab, EmptyState, WarningSignIcon } from 'evergreen-ui';
 import styles from './styles.module.css';
 
-const instructionsText = `// Install via npm
+const instructionsText = `# Install via npm
 npm install @traffiq/express-auth
 `;
 
@@ -34,7 +34,9 @@ const traffiqAuth = TraffiqAuth({
 // This will make all visitors to the root route go through the queue.
 app.get('/', traffiqAuth, function rootHandler(req, res) {
   res.end('Hello world!');
-});`;
+});
+
+app.listen(3000);`;
 
 const CodeIntegration = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -49,7 +51,7 @@ const CodeIntegration = () => {
               <span>Add traffiq as a dependency.</span>
               <CodeBlock
                 theme={zenburn}
-                language="javascript"
+                language="bash"
                 text={instructionsText}
                 showLineNumbers={false}
               />
