@@ -21,7 +21,7 @@
 
 .description {
   color: white;
-  font-size: 64px;
+  font-size: 48px;
   font-weight: bold;
   z-index: 100;
   display: block;
@@ -40,18 +40,18 @@
 }
 
 .image {
-  width: 384px;
+  width: 18%;
   max-width: 100%;
   position: absolute;
   animation: MoveUpDown 5s linear infinite;
-  bottom: 348px;
+  bottom: 25%;
 }
 
 @keyframes MoveUpDown {
   0%, 100% {
-    bottom: 348px;
+    bottom: 28%;
   }
   50% {
-    bottom: 296px;
+    bottom: 24%;
   }
 }
