@@ -10,6 +10,7 @@ import {
 import Input from '../../../components/Input';
 import checkAuthentication from '../../../api/checkAuthentication';
 import PrimaryButton from '../../../components/PrimaryButton';
+import logo from '../../../assets/traffiq.png';
 import styles from './styles.module.css';
 
 const Login = () => {
@@ -57,8 +58,9 @@ const Login = () => {
 
   return (
     <section className={styles.container}>
-      <h1 className={styles.title}>Log in</h1>
+      <img src={logo} className={styles.logo} />
       <form className={styles.form}>
+        <h1 className={styles.title}>Log in</h1>
         <Input
           type="text"
           placeholder="Username"
@@ -82,10 +84,11 @@ const Login = () => {
         >
           Log in
         </PrimaryButton>
+        <Link to="/home/signup" className={styles.link}>
+          New here? Create a new account!
+        </Link>
       </form>
-      <Link to="/home/signup" className={styles.link}>
-        New here? Create a new account!
-      </Link>
+      <span />
     </section>
   );
 };

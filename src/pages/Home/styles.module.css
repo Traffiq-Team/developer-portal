@@ -24,3 +24,9 @@
   background-color: rgb(69, 149, 235);
   height: 100%;
 }
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+}

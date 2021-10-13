@@ -6,6 +6,7 @@ import { SET_AUTHENTICATED } from '../../../store/AuthProvider/actions';
 import Input from '../../../components/Input';
 import createAccount from '../../../api/createAccount';
 import PrimaryButton from '../../../components/PrimaryButton';
+import logo from '../../../assets/traffiq.png';
 import styles from './styles.module.css';
 
 const Login = () => {
@@ -40,8 +41,9 @@ const Login = () => {
 
   return (
     <section className={styles.container}>
-      <h1 className={styles.title}>Create an account</h1>
+      <img src={logo} className={styles.logo} />
       <form className={styles.form}>
+        <h1 className={styles.title}>Create an account</h1>
         <Input
           type="text"
           placeholder="Username"
@@ -73,10 +75,11 @@ const Login = () => {
         >
           Create account
         </PrimaryButton>
+        <Link to="/home/login" className={styles.link}>
+          Already have an account? Log in here.
+        </Link>
       </form>
-      <Link to="/home/login" className={styles.link}>
-        Already have an account? Log in here.
-      </Link>
+      <span />
     </section>
   );
 };

@@ -15,4 +15,43 @@
   height: 100%;
   width: 100%;
   border-radius: 24px;
+  padding: 64px;
+  box-sizing: border-box;
+}
+
+.description {
+  color: white;
+  font-size: 64px;
+  font-weight: bold;
+  z-index: 100;
+  display: block;
+}
+
+.innerBox {
+  border-radius: 24px;
+  padding: 64px;
+  box-sizing: border-box;
+  background: rgb(50, 50, 50);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.image {
+  width: 384px;
+  max-width: 100%;
+  position: absolute;
+  animation: MoveUpDown 5s linear infinite;
+  bottom: 348px;
+}
+
+@keyframes MoveUpDown {
+  0%, 100% {
+    bottom: 348px;
+  }
+  50% {
+    bottom: 296px;
+  }
 }
