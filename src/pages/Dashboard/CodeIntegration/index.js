@@ -28,7 +28,7 @@ const traffiqAuth = TraffiqAuth({
   // Make sure the user agent is the same as the one that joined the queue.
   enforceUserAgent: false,
   // Whether or not to disallow JWT reuse. Results in increased memory usage.
-  preventKeyReuse: true,
+  preventTokenReuse: true,
   // The queue URL to redirect to in the case of an invalid or expired token.
   queueUrl: 'http://example.traffiq.live'
 });
