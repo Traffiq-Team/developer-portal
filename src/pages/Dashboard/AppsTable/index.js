@@ -101,11 +101,11 @@ const AppsTable = () => {
         <Table.TextCell>
           <a
             className={styles.queueUrl}
-            href={queueUrl}
+            href={`https://${queueUrl}`}
             target="_blank"
             rel="noreferrer"
           >
-            {queueUrl}
+            {`https://${queueUrl}`}
           </a>
         </Table.TextCell>
         <Table.TextCell isNumber>{config?.targetLatency}</Table.TextCell>

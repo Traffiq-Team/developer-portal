@@ -19,6 +19,8 @@ import * as TraffiqAuth from '@traffiq/express-auth';
 const app = express();
 
 const traffiqAuth = TraffiqAuth({
+  // The name of your app, as shown in your Traffiq dashboard.  
+  appName: 'Your App Name',
   // The public key file provided by Traffiq.
   publicKey: fs.readFileSync('path/to/public/key'),
   // Make sure the current user is the same IP as the one that joined the queue.
@@ -26,7 +28,7 @@ const traffiqAuth = TraffiqAuth({
   // Make sure the user agent is the same as the one that joined the queue.
   enforceUserAgent: false,
   // Whether or not to disallow JWT reuse. Results in increased memory usage.
-  blacklistKeys: true,
+  preventKeyReuse: true,
   // The queue URL to redirect to in the case of an invalid or expired token.
   queueUrl: 'http://example.traffiq.live'
 });
