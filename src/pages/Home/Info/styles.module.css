@@ -40,7 +40,7 @@
 }
 
 .image {
-  width: 18%;
+  width: 15%;
   max-width: 100%;
   position: absolute;
   animation: MoveUpDown 5s linear infinite;
