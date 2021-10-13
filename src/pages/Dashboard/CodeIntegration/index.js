@@ -9,12 +9,12 @@ npm install traffiq-express-auth
 
 const implementationText = `import fs from 'fs';
 import express from 'express';
-import * as TraffiqAuth from '@traffiq/express-auth';
+import * as TraffiqAuth from 'traffiq-express-auth';
 
 // or using CommonJS
 // const fs = require('fs');
 // const express = require('express');
-// const TraffiqAuth = require('@traffiq/express-auth');
+// const TraffiqAuth = require('traffiq-express-auth');
 
 const app = express();
 
