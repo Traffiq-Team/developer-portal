@@ -10,6 +10,7 @@ import deleteApp from '../../api/deleteApp';
 import QueuePreview from '../../components/QueuePreview';
 import saveApp from '../../api/saveApp';
 import getAppData from '../../api/getAppData';
+import getErrorMessageFromFailedRequest from '../../common/utils/getErrorMessageFromFailedRequest';
 import styles from './styles.module.css';
 
 const PUBLIC_KEY_URL = 'https://api.traffiq.xyz/publicKey';
@@ -41,7 +42,7 @@ const EditApp = () => {
         setTargetLatency(targetLatency);
         setSpecialTitle(message);
       } catch (error) {
-        toaster.danger(error.message);
+        toaster.danger(getErrorMessageFromFailedRequest(error));
       } finally {
         setIsLoading(false);
       }
@@ -59,7 +60,7 @@ const EditApp = () => {
       await saveApp(appName, targetLatency, specialTitle);
       history.push('/dashboard');
     } catch (error) {
-      toaster.danger(error.message);
+      toaster.danger(getErrorMessageFromFailedRequest(error));
     } finally {
       setIsSaving(false);
     }
@@ -77,7 +78,7 @@ const EditApp = () => {
       await deleteApp(appName);
       history.push('/dashboard');
     } catch (error) {
-      toaster.danger(error.message);
+      toaster.danger(getErrorMessageFromFailedRequest(error));
     } finally {
       setShowDeleteDialog(false);
       setIsDeleting(false);

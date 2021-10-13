@@ -7,6 +7,7 @@ import Input from '../../../components/Input';
 import createAccount from '../../../api/createAccount';
 import PrimaryButton from '../../../components/PrimaryButton';
 import logo from '../../../assets/traffiq.png';
+import getErrorMessageFromFailedRequest from '../../../common/utils/getErrorMessageFromFailedRequest';
 import styles from './styles.module.css';
 
 const Login = () => {
@@ -33,7 +34,7 @@ const Login = () => {
       authDispatch({ type: SET_AUTHENTICATED, payload: true });
       history.push('/dashboard');
     } catch (error) {
-      toaster.danger(error.message);
+      toaster.danger(getErrorMessageFromFailedRequest(error));
     } finally {
       setIsSubmitting(false);
     }

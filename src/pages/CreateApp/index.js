@@ -9,6 +9,7 @@ import PrimaryButton from '../../components/PrimaryButton';
 import QueuePreview from '../../components/QueuePreview';
 import isValidSubdomain from '../../common/utils/isValidSubdomain';
 import createApp from '../../api/createApp';
+import getErrorMessageFromFailedRequest from '../../common/utils/getErrorMessageFromFailedRequest';
 import styles from './styles.module.css';
 
 const CreateApp = () => {
@@ -67,7 +68,7 @@ const CreateApp = () => {
 
       history.push('/dashboard');
     } catch (error) {
-      toaster.danger(error.message);
+      toaster.danger(getErrorMessageFromFailedRequest(error));
     } finally {
       setIsSubmitting(false);
     }

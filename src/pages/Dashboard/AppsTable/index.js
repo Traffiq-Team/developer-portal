@@ -16,6 +16,7 @@ import {
 import Fuse from 'fuse.js';
 import getAllAppData from '../../../api/getAllAppData';
 import PrimaryButton from '../../../components/PrimaryButton';
+import getErrorMessageFromFailedRequest from '../../../common/utils/getErrorMessageFromFailedRequest';
 import styles from './styles.module.css';
 
 const fuseOptions = {
@@ -36,7 +37,7 @@ const AppsTable = () => {
       const apps = await getAllAppData();
       setApps(apps);
     } catch (error) {
-      toaster.danger(error.message);
+      toaster.danger(getErrorMessageFromFailedRequest(error));
     } finally {
       setIsLoading(false);
     }

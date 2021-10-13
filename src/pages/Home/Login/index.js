@@ -11,6 +11,7 @@ import Input from '../../../components/Input';
 import checkAuthentication from '../../../api/checkAuthentication';
 import PrimaryButton from '../../../components/PrimaryButton';
 import logo from '../../../assets/traffiq.png';
+import getErrorMessageFromFailedRequest from '../../../common/utils/getErrorMessageFromFailedRequest';
 import styles from './styles.module.css';
 
 const Login = () => {
@@ -50,7 +51,7 @@ const Login = () => {
 
       history.push('/dashboard');
     } catch (error) {
-      toaster.danger(error.message);
+      toaster.danger(getErrorMessageFromFailedRequest(error));
     } finally {
       setIsSubmitting(false);
     }
