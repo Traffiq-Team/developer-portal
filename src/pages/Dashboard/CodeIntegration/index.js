@@ -4,7 +4,7 @@ import { Tablist, Tab, EmptyState, WarningSignIcon } from 'evergreen-ui';
 import styles from './styles.module.css';
 
 const instructionsText = `# Install via npm
-npm install @traffiq/express-auth
+npm install traffiq-express-auth
 `;
 
 const implementationText = `import fs from 'fs';
